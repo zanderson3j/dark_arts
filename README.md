@@ -11,10 +11,11 @@ Malware (Malicious Software) is created for many different reasons depending on 
 Mr. Beek has done a lot of research on samples of malware. He talks about using different tools to understand the threat and build a solution. He mentions that his company can get 200k-300k  malware samples to test daily which I found very interesting. Luckily, malware research seems to be very collaborative across companies and governments because that is an immense number of threats. It is mentioned that there is a demand for malware research skills. I am interested in the subject matter of this course since it is very foreign to me, and although I find it interesting to learn about so far, I don’t think it is something I would like to pursue as a career. It does seem useful to be aware of however.
 
 There are different types of malware and I didn’t know the details of their differences before:
-* Viruses
-** Parasitic - depends on another file
-** Polymorphic - dynamically changes itself (very difficult to analyze/kill)
-** Worm - spreads quickly
+
+* Viruses:
+  * Parasitic - depends on another file
+  * Polymorphic - dynamically changes itself (very difficult to analyze/kill)
+  * Worm - spreads quickly
 * Trojans - sits on a host computer and sends back stolen information
 * Potentially Unwanted Program - stuff that ends up on your computer you might not want like adware
 
