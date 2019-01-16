@@ -33,7 +33,9 @@ Some More New Malware Definitions I Learned:
 * Hash - unique string calculated from a file and its contents. (only one piece of malware has been able to duplicate a hash)
 * Replication - replicate what the malware is doing in order to create counter measures.
 
-I found exploitation kits interesting. It seems like a hacker could gather information about a computer and then use exploits from a kit specifically tailored for that type of operating system and version, etc. I also thought ransom ware was very interesting. This is software that can hold data or access to a system for ransom. It was really spooky when it was later talked about how this could be used on a car or medical device. Ransom ware seems like it will be a huge problem with the internet of things.
+I found exploitation kits interesting. It seems like a hacker could gather information about a computer and then use exploits from a kit specifically tailored for that type of operating system and version, etc. I also thought ransomware was very interesting. This is software that can hold data or access to a system for ransom. It was really spooky when it was later talked about how this could be used on a car or medical device. Ransomware seems like it will be a huge problem with the internet of things.
+
+I learned that Advanced Persistent Threat (APT) represents some aspects of attackers using malware. Advanced attackers are clearly professional as demonstated by their code and ingenuity. Persistent attackers have clear goals that they will consistently work to reach no matter how long it takes. Threat attackers are backed, motivated, and have a plan. These aspects can be combined to make more dangerous attackers.
 
 In the lectures and in the lab, I was introduced to some ways to analyze malware. There are two main methods:
 
