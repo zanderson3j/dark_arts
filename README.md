@@ -79,6 +79,36 @@ The fourth lab was very cool, if not potentially creepy, and involved recovering
 
 ![](img/week2/photorec.png)
 
+### Challenge
+
+In addition to the labs, there was also a challenge this week. We were given an image of a usb stick from a North Korean hacker, and had to find out who was being targeted and what did it do.
+
+I started by using osfmount to mount the image. It contained several files, some with Korean names and one with English. One of our hints was to translate these names, but I had trouble doing that from the VM.
+
+![](img/week2/mounted.png)
+
+I also wanted to know if there were any deleted files on the image, so I ran the image through PhotoRec which recovered 8 files.
+
+![](img/week2/recovered.png)
+
+I then started exploring the files. Using hints from Mr. Beek, I knew that the password to unzip the zip file in the mounted image was in the jpg with an English name. I opened the jpg in file insight, and found a password using the Strings plugin.
+
+![](img/week2/password.png)
+
+Using the password to unzip the file gives you a csv file with a list of targets inside.
+
+![](img/week2/targets.png)
+
+Among the recovered data files, there is a creepy image that says hacked by the #GOP. It has a like of urls that all end with the file SPEData.zip. 
+
+![](img/week2/hacker.png)
+
+More hints from Mr. Beek unveiled that the .bin file was the malware and that it contains usernames and passwords that are encrypted. I ended up finding them by using an XOR text search for SPE. Sure enough, I had found the usernames and passwords.
+
+![](img/week2/usrpwd.png)
+
+I had found the list of targets and a list of user names and passwords. I truly relied on the hints to get through this exercise since I’m very new to forensics.
+
 ### Final Thoughts
 
 The material this week was very interesting, and if nothing else, this class is doing a good job of making me paranoid. I still don't think I would enjoy a career in this field, but some of the tools utilizing machine learning to do analysis are of interest to me. Building something like a program that can guess age from skin tone seems really cool. I did have some fun doing the labs this week though, ecspecially playing with Volatility from the Command Prompt.
