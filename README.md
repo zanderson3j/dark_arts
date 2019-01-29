@@ -97,6 +97,14 @@ Cuckoo is biggest automated analysis tool that independent researchers use. It d
 
 ### Labs
 
+There were several labs this week. The first few were simply practicing using Yara to develope signatures. The last one wrapped up the unit by asking us to identify one piece of malware amoung black and white samples, analyze it, and write a post describing it.
+
+_Yara_
+
+I found the first Yara labs fairly straightforward, although coming up with signatures by hand is a bit tedious. The third lab was very tricky since there were way more files and the commonalities were more obfuscated.
+
+_Blog_
+
 ### Final Thoughts
 
 This week wasn't as exciting to me as last week, but was still interesting. I find the idea of machine learning to solve the automation problems someething I'd like to learn more about. As a big wrap up, the job of defended against malware consists of:
