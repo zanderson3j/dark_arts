@@ -12,7 +12,7 @@ Mr. Schmugar got into cyber security by chance while administering machines duri
 
 We covered four key steps cyber attacks do and how they could be caught by defenses because the best defense strategy is layered:
 
-First Contact:
+_First Contact_
 
 How the attacker releases their threat to their victims.
 
@@ -33,7 +33,7 @@ Defense:
 * Antivirus
 
 
-Local Execution
+_Local Execution_
 
 Get the malicious content to execute on the victims device.
 
@@ -48,7 +48,7 @@ Defense:
 * Antivirus
 
 
-Establish Presence
+_Establish Presence_
 
 Once threat is there and executed it tries to persist and blend in so it isn’t noticed by the user or the operating system. This could be things like installing things in the system32 directory, altering time stamps so you don’t see that something was recently modified, having the malware binary signed so the OS will execute it thinking it is ok. Bootkit and rootkit are also very popular for finding ways to hide. There are many ways to persist such as hiding executables with a bootkit or in run keys and messing with the antivirus software.
 
@@ -62,7 +62,7 @@ Defense:
 * Behavioral
 * Access Control - if known program let it do certain things and not otherwise.
 
-Malicious Activity
+_Malicious Activity_
 
 The goal of malware is primarily to collect information from a device. An attacker may be looking for passwords, credit cards, etc. There are different methods of doing this such as key logging, logs, and parsing information. Info could be sent out by different network protocols including email.
 
