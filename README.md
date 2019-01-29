@@ -2,6 +2,94 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 3 (1/29/19)
+
+### Lecture
+
+This week we had a new lecturer, Craig Schmugar, who works for Intel/McAfee as well. He presented a series of lectures on Malware Defense. Like Mr. Beek from previous weeks, he has lots of experience to share. While I found myself wishing he elaborated more on some anecdotes, I still found his material interesting.
+
+Mr. Schmugar got into cyber security by chance while administering machines during the Happy99 email bug. I think it’s really cool how he has a background in music but ended up in a computer science field, since everyone in our online program started in different fields. He talked about how working at McAfee gave him the experience he needed to work in this field and how many better developers out of school have lots of gaps that need to be filled while working in the industry. This has been close to my experience working in a new developer job. I find the coursework very useful, but there is even more to be learned on the job so it is very nice to have different industry professionals leading some lectures.
+
+
+We covered four key steps cyber attacks do and how they could be caught by defenses because the best defense strategy is layered:
+
+First Contact:
+
+How the attacker releases their threat to their victims.
+
+Examples:
+* Email - malicious attachments or links
+* Malvertising - ads that lead to malicious sites
+* Instant Messaging - used to be a popular way
+* Poisoned Search Results - this is very interesting where an attacker tricks google into putting malicious links near the top
+* Watering Hole - sites where groups of people congregate
+* Web App - for example exposing a vulnerability in word press built sites
+* Physical Access - like a usb stick, these were used in stuxnet
+
+Defense: web reputation (known bad sites), educate users, epoxy usb port, script blockers, antivirus
+
+
+Local Execution
+
+Get the malicious content to execute on the victims device.
+
+Examples:
+* Feature/Bug - for example autoruns could be used to run malware on windows since the autorun executable on external devices were run immediately when the media is inserted. Microsoft remedied this after many years.
+* Exploitation - for example exposing a file format or plug-in
+* Social Engineering - user is tricked into running something like a malicious installer. most popular method of execution.
+
+Defense: educate users, two factor authorization (us banks don’t require usb to visit bank, probably a money reason), antivirus
+
+
+Establish Presence
+
+Once threat is there and executed it tries to persist and blend in so it isn’t noticed by the user or the operating system. This could be things like installing things in the system32 directory, altering time stamps so you don’t see that something was recently modified, having the malware binary signed so the os will execute it thinking it is ok. Bootkit and rootkit are also very popular for finding ways to hide. There are many ways to persist such as hiding executables win a bootkit or in run keys and messing with the anti virus software.
+
+An interesting example was an adobe installer runs a certain file with a specified filename that an attacker altered to run some malware. So when the user clicked on the adobe installer, it ran the file with a malicious function unknowingly.
+
+We also saw an example that reminded me of the lab from week 1 where the attacker changes the local file for resolving domain names to redirect certain websites to malicious sites. In this case, no code is left on the system so it could be a tricky problem to solve.
+
+Defense: antivirus, host intrusion prevention, behavioral, access control (if known let it do certain things)
+
+Malicious Activity
+
+The goal of malware is primarily to collect information from a device. An attacker may be looking for passwords, credit cards, etc. There are different methods of doing this such as key logging, logs, and parsing information. Info could be sent out by different network protocols including email.
+
+Defense: data loss prevention, anti key logging and screen scrapers, bot net detection
+
+
+A big issue with relying on users is people don’t understand or feel numb to a threat so they ignore their precautions. I found it very interesting and a little humorous when students offered examples of how people can prevent malware from getting on one of their devices. Mr. Schmugar would then ask the student if they do that, and they almost always said no. There was a discussion about why US banks don’t require a usb device to access a bank site on a computer, and it was suggested that if it was good for business then they probably would. That suggests maybe users would find it to be to annoying and don’t care enough.
+
+
+Layered defense is best for preventing successful attacks with layers from the network to the host machine. All of them are dependent on the proper use and prevention at all levels. Sometimes there are issues in industry where the company has a suite of products but don’t deploy them. There also can be issues from using products from different vendors since they may rely on different checks at different layers. This changes the strategy that and virus companies take when building a defense since they can’t be sure the other layers are using their products.
+
+Designing anti malware has lots of variables to take into account. I found the challenge of planning for the future and not wanting to need continuous updates very interesting. Customers probably don’t want to have to constantly install updates to their anti malware, but the threats are continuing to evolve at a faster pace. I know in many types of development, continually releasing updates on the go is essential to their products, so being bound a bit from doing that for something that needs to evolve so fast seems very difficult. Being able to use the cloud for updates in real time sounds like the best solution they are using, but it sounds like it depends on how comfortable the customer is with it.
+
+Malware products consist of different scanner cores that have different jobs. Different types of malware scans that could be done are files, cookies, registry, memory, and scripts.
+
+Yara is a pattern matching language for searching through files or memory. It provides a way for people to make their own scanners without access to proprietary software. It is meant for simple rapid development. 
+
+The auto generated strings tend not to be the best, human created still currently tend to be the best way to create them. Machine learning is mentioned as something that is improving these auto generated strings which I thing will end up being extremely useful. 
+
+Tuguu is an adware vendor that has signed binaries. They can get signed binaries since it is in fact a really simple process where you can seemingly just buy them. There are millions of signed keys from legitimate adware vendors. Moving to a digital signature reputation more than is something signed or not. It more lets the receiver know that there is some integrity that what the got was from the specific vendor. Small yara signatures are best since it can lead to higher detection to signature-byte ratios. 
+
+Signature creation with something like yara is another additional tool to use in addition to malware analysis. About 99% of signatures are automated, but the best and simplest tend to still be created by humans. One aim should be to detect as much malware with as small a signature as possible.
+
+Malware Automation Advantages:
+* Scale - compare more files in less time
+* Consistency - removing human error?, more consistent results?
+
+Disadvantages:
+* Out of Context and Prone to Evasion - Not training in the real world. Malware can trick controlled environments.
+
+Many efforts to automate fail because of the white problem. (Do No Harm is a McAfee credo - no false positives). Things moving in a crowd sourced approach where malicious files could be in a database people can check. 
+
+I find the idea of machine learning to solve the automation problems very interesting.
+
+Cuckoo is biggest automated analysis tool that independent researchers use. Memory dumps of malware, spoofs internet, screenshots of windows, full memory dump, tracked files being created/modified/downloaded. Uses randomly named url to try tricking malware. Can do both static and behavioral analysis. Can handle many different file formats.
+
+Wrap-up: Discover if theres a threat, isolate/classify/remedy the malicious code, defend against future attacks, describe the attack (change wording)
+
 ## Week 2 (1/22/19)
 
 ### Lecture
