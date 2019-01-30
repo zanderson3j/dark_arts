@@ -2,6 +2,136 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 3 (1/29/19)
+
+### Lecture
+
+This week we had a new lecturer, Craig Schmugar, who works for Intel/McAfee as well. He presented a series of lectures on Malware Defense. Like Mr. Beek from previous weeks, he has lots of experience to share. While I found myself wishing he elaborated more on some anecdotes and bullet points on his slides, I still found his material interesting.
+
+Mr. Schmugar got into cyber security by chance while administering machines during the Happy99 email bug. I think it’s really cool how he has a background in music but ended up in a computer science field, since everyone in our online program started in different fields. He talked about how working at McAfee gave him the experience he needed to work in this field and how many better developers out of school have lots of gaps that need to be filled while working in the industry. This has been close to my experience working in a new developer job. I find the coursework very useful, but there is even more to be learned on the job so it is very nice to have different industry professionals leading some lectures.
+
+We covered four key steps cyber attacks do and how they could be caught by defenses because the best defense strategy is layered:
+
+_First Contact_
+
+How the attacker releases their threat to their victims.
+
+Examples:
+* Email - malicious attachments or links.
+* Malvertising - ads that lead to malicious sites.
+* Instant Messaging - used to be a popular way.
+* Poisoned Search Results - this is very interesting where an attacker tricks google into putting malicious links near the top.
+* Watering Hole - sites where groups of people congregate so an attacker can target a specific group.
+* Web App - for example exposing a vulnerability in word press built sites or my thought was a dependency in something like a ruby gem (library).
+* Physical Access - like a usb stick, these were used in stuxnet.
+
+Defense: 
+* Web Reputation (known bad sites) - browsers can give warning about visiting certain know bad sites.
+* Educate Users - this is not always effective since the average user might not know enough to be worried.
+* Epoxy Usb Port - basically putting glue in a usb port to deter the user from using it.
+* Script Blockers
+* Antivirus
+
+
+_Local Execution_
+
+Get the malicious content to execute on the victims device.
+
+Examples:
+* Feature/Bug - for example autoruns could be used to run malware on windows since the autorun executable on external devices were run immediately when the media is inserted. Microsoft remedied this after many years.
+* Exploitation - for example exposing a file format or plug-in
+* Social Engineering - user is tricked into running something like a malicious installer. most popular method of execution.
+
+Defense: 
+* Educate Users - again, this is not always effective since the average user might not know enough to be worried.
+* Two Factor Authorization - this could be having to enter a password and a special token sent to your phone.
+* Antivirus
+
+
+_Establish Presence_
+
+Once threat is there and executed it tries to persist and blend in so it isn’t noticed by the user or the operating system. This could be things like installing things in the system32 directory, altering time stamps so you don’t see that something was recently modified, having the malware binary signed so the OS will execute it thinking it is ok. Bootkit and rootkit are also very popular for finding ways to hide. There are many ways to persist such as hiding executables with a bootkit or in run keys and messing with the antivirus software.
+
+An interesting example was an adobe installer runs a certain file with a specified filename that an attacker altered to run some malware. So when the user clicked on the adobe installer, it ran the file with a malicious function unknowingly.
+
+We also saw an example that reminded me of the lab from week 1 where the attacker changes the local file for resolving domain names to redirect certain websites to malicious sites. In this case, no code is left on the system so it could be a tricky problem to solve.
+
+Defense: 
+* Antivirus
+* Host Intrusion Prevention
+* Behavioral
+* Access Control - if known program let it do certain things and not otherwise.
+
+_Malicious Activity_
+
+The goal of malware is primarily to collect information from a device. An attacker may be looking for passwords, credit cards, etc. There are different methods of doing this such as key logging, logs, and parsing information. Info could be sent out by different network protocols including email.
+
+Defense: 
+* Data Loss Prevention
+* Anti Key Logging and Screen Scrapers
+* Bot Net Detection
+
+
+A big issue with relying on users is people don’t understand or feel numb to a threat so they ignore their precautions. I found it very interesting and a little humorous when students offered examples of how people can prevent malware from getting on one of their devices. Mr. Schmugar would then ask the student if they do that, and they almost always said no. There was a discussion about why US banks don’t require a usb device to access a bank site on a computer, and it was suggested that if it was good for business then they probably would. That suggests maybe users would find it to be to annoying and don’t care enough.
+
+Layered defense is best for preventing successful attacks with layers from the network to the host machine. All of them are dependent on the proper use and prevention at all levels. Sometimes there are issues in industry where the company has a suite of products but don’t deploy them. There also can be issues from using products from different vendors since they may rely on different checks at different layers. This changes the strategy that and virus companies take when building a defense since they can’t be sure the other layers are using their products and do the same checks.
+
+Designing anti malware has lots of variables to take into account. I found the challenge of planning for the future and not wanting to need continuous updates very interesting. Customers probably don’t want to have to constantly install updates to their anti malware, but the threats are continuing to evolve at a faster pace. I know in many types of development, continually releasing updates on the go is essential to their products, so being bound a bit from doing that for something that needs to evolve so fast seems very difficult. Being able to use the cloud for updates in real time sounds like the best solution they are using, but it sounds like it depends on how comfortable the customer is with it.
+
+Malware products consist of different scanner cores that have different jobs. Different types of malware scans that could be done are files, cookies, registry, memory, and scripts.
+
+Yara is a pattern matching language for searching through files or memory. It provides a way for people to make their own scanners without access to proprietary software. It is meant for simple rapid development and is another additional tool to use in addition to malware analysis. Although auto generated strings tend not to be the best, about 99% of them are auto generated. Human created still currently tend to be the best way to create them and one aim should be to detect as much malware with as small a signature as possible. Machine learning is mentioned as something that is improving these auto generated strings which I thing will end up being extremely useful. Small yara signatures are best since it can lead to higher detection to signature-byte ratios.
+
+Tuguu is an adware vendor that has signed binaries which means Windows will recognize them as legitimate. It is meant to the receiver know that there is some integrity that what the got was from the specific vendor. They can get signed binaries since it is in fact a really simple process where you can seemingly just buy them. There are millions of signed keys from legitimate adware vendors. This has created a movement towards using digital signature reputation more than is something signed or not. 
+
+Malware Automation Advantages:
+* Scale - compare more files in less time
+* Consistency - this was mentioned but not discussed much, maybe removing human error for more consistent results
+
+Disadvantages:
+* Out of Context and Prone to Evasion - not training in the real world. malware can trick controlled environments.
+
+Many efforts to automate fail because of the white problem. 'Do No Harm' is a McAfee credo which means no false positives. Things are moving to a crowd sourced approach where malicious files could be in a database people/companies can check. 
+
+Cuckoo is biggest automated analysis tool that independent researchers use. It does memory dumps of malware, spoofs internet, takes screenshots of windows, full memory dump, tracks files being created/modified/downloaded. It uses randomly named url to try tricking malware from detecting its driver which is really cool. It can do both static and behavioral analysis and handle many different file formats.
+
+### Labs
+
+There were several labs this week. The first few were simply practicing using Yara to develop signatures. The last one wrapped up the unit by asking us to identify one piece of malware amoung black and white samples, analyze it, and write a post describing it.
+
+_Yara_
+
+I found the first Yara labs fairly straightforward, although coming up with signatures by hand is a bit tedious. The third lab was very tricky since there were way more files and the commonalities were more obfuscated.
+
+_Blog_
+
+Investigator: Zachary Anderson
+Date/Time: January 29 2016 / 11pm EST
+Malware Hash: 00670F2B9631D0F97C7CFC6C764DD9D9
+Yara Signature:
+Analysis: This file hash is considered malicious (https://www.agicssecurity.com/en/filereport/00670f2b9631d0f97c7cfc6c764dd9d9/) and is known as hau.exe. Using FileInsight we can see that it begins with the characters MZ which means it is an executable. I also found several suspicious web addresses and commands for an executable called qusla.exe.
+
+I copied the file to my desktop and changed its name to bad with no extension. I then ran Cuckoo via analyzer.py on the command line while fakenet was was also executing. It put 4 csv files into the Cuckoo logs and added a file called Dx.bat and and Internet Explorer icon to the desktop. 
+
+The csv file with the logs for 'bad' showed that it changed the registry and did some things on the filesystem. This suggests that it was making itself persistent through reboots and possibly searching for information on the computer. The logs also showed it tries doing something with qusla.exe and Dx.bat. 
+
+The other log files were for reg.exe, cmd.exe, and attrib.exe. I saw bad use the attrib command in FileInsight to change permissions for qusla.exe. The logs seem to also mainly do things on the filesystem.
+
+I didn't find anything suspicious from FakeNet. It looked like maybe the only things it caught were from Cuckoo doing something since it had something about python.
+
+I found using just Cuckoo to be more challenging than the other tools for analysis. Using the logs and FileInsight, I suspect that this sample creates an Internet Explorer icon on the desktop that will lead to a malicious site. The files qulsa.exe and Dx.bat, or perhaps other executables, may work together to gather information that could be collected when those sites are visited. The community definitely agrees this is a malicious file (https://www.agicssecurity.com/en/filereport/00670f2b9631d0f97c7cfc6c764dd9d9/) and should not be executed.
+
+### Final Thoughts
+
+This week wasn't as exciting to me as last week, but was still interesting. I find the idea of machine learning to solve the automation problems someething I'd like to learn more about. As a big wrap up, the job of defended against malware consists of:
+* Discover if theres a threat - This could be from static and dynamic analysis.
+* isolate/classify/remedy the malicious code - Describe the threat and repair the damage.
+* Defend Against Future Attacks - Build more robust defenses. 
+* Describe the Attack - Everything is about understanding and being able to describe exactly what a malware sample does so it can not only be countered, but your finidings can be used in court and your clients can understand the impact and what to change in the future.
+
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Craig Schmugar.
+
+
 ## Week 2 (1/22/19)
 
 ### Lecture
@@ -13,6 +143,7 @@ He recommended a book called Cuckoo’s Nest by Cliff Stoll for people who find 
 He started with discussing incident response. It is compared to a fire fighter arriving at a scene and assessing the situation and how best to proceed in terms of priority and safety. The team is generally experts thrown together ad hoc, but it would be better to have a dedicated trained team. Communication is very important. The process from lecture is shown below. 
 
 ![](img/week2/IR_Process.png)
+Screenshot from OSU Lecture by Christiaan Beek
 
 The types of situations that require forensic analysis can be things like fraud and child exploitation, the latter of which is unfortunately what a lot of the work Mr. Beek had done in Holland was. It is later discussed how difficult this job can be when you need to recover images of terrible things like this. Luckily, they seem to have better methods for minimizing the amount of images and number of people that would have to look at that stuff. I found it very cool that they can use skin tone to determine the approximate age of someone in a picture in order to narrow down a search. I think I would be interested in building tools like that.
 
@@ -29,6 +160,7 @@ There are many things that can be used as evidence as long as they can help prov
 It makes most sense to look at evidence that can disappear fast first. The order data should probably be looked at based on how quickly is disappears is shown below. You should start in the middle and go out.
 
 ![](img/week2/In_Out.png)
+Screenshot from OSU Lecture by Christiaan Beek
 
 Some challenges with evidence are the amount of data, time synching, skills (of investigators for different technologies), tools, and log format. Mr.Beek talked about the Siem tool which can normalize logs to make them easier to understand by one person. It is mentioned, and I really agree, that machine learning will help a lot in analyzing logs in the near future.
 
@@ -107,7 +239,11 @@ More hints from Mr. Beek unveiled that the .bin file was the malware and that it
 
 ![](img/week2/usrpwd.png)
 
-I had found the list of targets and a list of user names and passwords. I truly relied on the hints to get through this exercise since I’m very new to forensics.
+I had found the list of targets and a list of user names and passwords. I truly relied on the hints to get through this exercise since I’m very new to forensics. I followed up with trying to find out what the malware in the .bin file was doing. I moved the files to my desktop and renamed the .bin file to challenge.exe. I brought up the process monitor, fake net, and anitspy to see if I could catch anything interesting. After executing, the process monitor showed that the malware did a lot of things in the registry and with driver files. I also noticed that a new executable was created in the same directory as the malware. I then noticed that fakenet had a lot of traffic. 
+
+![](img/week2/fakenet.png)
+
+I had seen some files with lists of IP addresses in the recovered data, so I suspect that this malware is trying to send data out from the computer and is using the registry to survive reboot.
 
 ### Final Thoughts
 
