@@ -106,9 +106,23 @@ I found the first Yara labs fairly straightforward, although coming up with sign
 _Blog_
 
 Investigator: Zachary Anderson
+
 Date/Time: January 29 2016 / 11pm EST
+
 Malware Hash: 00670F2B9631D0F97C7CFC6C764DD9D9
+
 Yara Signature:
+```
+rule bad
+{
+    strings:
+            $a = "hua.exe"
+            $b = "qusla.exe"
+    condition:
+            $a and $b
+}
+```
+
 Analysis: This file hash is considered malicious (https://www.agicssecurity.com/en/filereport/00670f2b9631d0f97c7cfc6c764dd9d9/) and is known as hau.exe. Using FileInsight we can see that it begins with the characters MZ which means it is an executable. I also found several suspicious web addresses and commands for an executable called qusla.exe.
 
 ![](img/week3/fi1.png)
