@@ -101,7 +101,7 @@ There were several labs this week. The first few were simply practicing using Ya
 
 _Yara_
 
-I found the first Yara labs fairly straightforward, although coming up with signatures by hand is a bit tedious. The third lab was very tricky since there were way more files and the commonalities were more obfuscated.
+I found the first Yara labs fairly straightforward, although coming up with signatures by hand is a bit tedious. The third lab was very tricky since there were way more files and the commonalities were more obfuscated. These exercises drove home the point that automating these jobs is obviously neccessary in order to handle the enormous scale of unique malware that needs to be dectected, but humans can still make simpler signatures which are more effective.  
 
 _Blog_
 
@@ -123,13 +123,13 @@ rule bad
 }
 ```
 
-Analysis: This file hash is considered malicious (https://www.agicssecurity.com/en/filereport/00670f2b9631d0f97c7cfc6c764dd9d9/) and is known as hau.exe. Using FileInsight we can see that it begins with the characters MZ which means it is an executable. I also found several suspicious web addresses and commands for an executable called qusla.exe.
+Analysis: This file hash is considered malicious (https://www.agicssecurity.com/en/filereport/00670f2b9631d0f97c7cfc6c764dd9d9/) and is known as hau.exe which I found in the file as well. Using FileInsight we can see that it begins with the characters MZ which means it is an executable. I also found several suspicious web addresses and commands for an executable called qusla.exe.
 
 ![](img/week3/fi1.png)
 ![](img/week3/fi2.png)
 ![](img/week3/fi3.png)
 
-I copied the file to my desktop and changed its name to bad with no extension. I then ran Cuckoo via analyzer.py on the command line while fakenet was was also executing. It put 4 csv files into the Cuckoo logs and added a file called Dx.bat and and Internet Explorer icon to the desktop. 
+I copied the file to my desktop and changed its name to bad with no extension. I then ran Cuckoo via analyzer.py on the command line while fakenet was also executing. It put 4 csv files into the Cuckoo logs and added a file called Dx.bat and an Internet Explorer icon to the desktop. 
 
 ![](img/week3/cuckoo.png)
 ![](img/week3/csv.png)
@@ -140,7 +140,7 @@ The csv file with the logs for 'bad' showed that it changed the registry and did
 ![](img/week3/bad1.png)
 ![](img/week3/bad2.png)
 
-The other log files were for reg.exe, cmd.exe, and attrib.exe. I saw bad use the attrib command in FileInsight to change permissions for qusla.exe. The logs seem to also mainly do things on the filesystem.
+The other log files were for reg.exe, cmd.exe, and attrib.exe. I saw 'bad' use the attrib command in FileInsight to change permissions for qusla.exe. The logs seem to also mainly do things on the filesystem.
 
 ![](img/week3/reg.png)
 ![](img/week3/cmd.png)
@@ -154,13 +154,13 @@ I found using just Cuckoo to be more challenging than the other tools for analys
 
 ### Final Thoughts
 
-This week wasn't as exciting to me as last week, but was still interesting. I find the idea of machine learning to solve the automation problems someething I'd like to learn more about. As a big wrap up, the job of defended against malware consists of:
+This week wasn't as exciting to me as last week, but was still interesting. I find the idea of machine learning to solve the automation problems something I'd like to learn more about. As a big wrap up, the job of defended against malware consists of:
 * Discover if theres a threat - This could be from static and dynamic analysis.
 * isolate/classify/remedy the malicious code - Describe the threat and repair the damage.
 * Defend Against Future Attacks - Build more robust defenses. 
 * Describe the Attack - Everything is about understanding and being able to describe exactly what a malware sample does so it can not only be countered, but your finidings can be used in court and your clients can understand the impact and what to change in the future.
 
-Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Craig Schmugar.
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Craig Schmugar and the malware site (https://www.agicssecurity.com/en/filereport/00670f2b9631d0f97c7cfc6c764dd9d9/).
 
 
 ## Week 2 (1/22/19)
