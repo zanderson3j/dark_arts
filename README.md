@@ -2,7 +2,7 @@
 
 ## Student: Zachary Anderson (andezach)
 
-## Week 3 (2/5/19)
+## Week 4 (2/5/19)
 
 ### Lecture
 
