@@ -2,6 +2,67 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 3 (2/5/19)
+
+### Lecture
+
+#### Vulnerability Analysis and Exploitation
+
+This week our lecturer was Brad Antoniewicz. He works for Foundstone which is a group in McAfee that tries to hack systems. His group gets hired to break into computers, though he specifically does research. He also does some lectures and contributed to some hacking books. He is a very engaging speaker with some fun anecdotes from his experiences.
+
+
+##### What is Hacking?
+
+Mr. Antoniewicz describes hacking as controlling a program in a certain way. It is looking at what a program does and think about what the programmer didn’t think about how it could be used. It is about manipulating software either by finding bugs in the code which are bad software or finding bad configurations/design such as weak passwords. Finding bugs in the software is more difficult to exploit and less common. This pretty closely aligns to what I understood about hacking before, although I would have thought there would be more software based attacks.
+
+Crackdowns on hacking has become more serious with the government and companies putting lots of resources into preventing it. Interestingly, it used to have a less malicious connotation. Bug bounty programs are rewards for finding vulnerabilities in companies software. Mr. Antoniewicz had a fun story about how he was threatened to be sued by a legal team at samsung for finding a vulnerability, but another part of the company had a bug bounty program and he ended up with $5,000. The rewards can apparently get very high. I think it would be cool to expose a vulnerability, but I wonder how many people get in serious trouble trying to collect a bug bounty.
+
+There has been a shift in attacks from starting in the internet and attacking systems exposed to the internet to users by phishing and social engineering. This is because companies increased their border security. Now attacks try to compromise a user’s system, primarily from the browser, and spread to the rest of the network. This could be from email links, websites, or something else. For websites, as they render the attacker can get control of the browser which means it can do some things to the computer. I find the shift in how to hack systems very interesting, but it makes a lot of sense with all the increased security. I also wasn’t aware of how easily it seems an attacker can use the browser to do things to someones computer. In the past I thought that making your own web browser would be a cool project. Now I still think it would be, but I also am pretty sure my computer would get hacked since I’m sure it would have terrible security.
+
+
+##### WinDBG (Win-Debug)
+
+We did some small demos accompanied with a big info drop on WinDBG. I had not heard of or used WinDBG previously. It lets you stop execution of a program and examine what is happening in the program at chosen points. Mr. Antoniewicz said that when people exploit something, they try to get the program to crash and then use winDBG during it to see if there are an vulnerabilities. We just played around with it to get comfortable. Here is some useful information for using the program…
+
+Important Points about WinDBG:
+* Shows registers, flags, and location at break points.
+* Numbers are in hex format.
+* The db command can be useful in seeing strings.
+
+Commands:
+lm - list modules
+lmd m {string} - list modules and match a string
+bp {filename}!{function} - set a break point
+bl - list the break points
+g - go to a break point
+g {filename}!{function}+{offset} - go to a point in memory
+dd {memory/register} {number of lines}- dwords of memory
+db {memory/register} {number of lines} - bytes of memory
+u {memory/register} - disassemble to assembly
+.formats {number} - show value in different formats
+dv - shows local variables on screen
+.hh {command} - help/doc
+da {value} - shows value as an ascii string
+du {value} - shows value as a unicode string
+t - step into
+p - step over
+pt - execute and return
+q - quit
+r - view registers
+
+Extended Commands:
+!teb - stack info for a thread
+!peb - heap info for a process
+!address {address} - where an address is
+
+Registers to Know:
+eax - often has the return value of a function
+eip - instruction pointer
+ebp - stack frame base pointer
+esp - stack pointer
+ecx - counter
+
+
 ## Week 3 (1/29/19)
 
 ### Lecture
@@ -25,7 +86,7 @@ Examples:
 * Web App - for example exposing a vulnerability in word press built sites or my thought was a dependency in something like a ruby gem (library).
 * Physical Access - like a usb stick, these were used in stuxnet.
 
-Defense: 
+Defense:
 * Web Reputation (known bad sites) - browsers can give warning about visiting certain know bad sites.
 * Educate Users - this is not always effective since the average user might not know enough to be worried.
 * Epoxy Usb Port - basically putting glue in a usb port to deter the user from using it.
@@ -42,7 +103,7 @@ Examples:
 * Exploitation - for example exposing a file format or plug-in
 * Social Engineering - user is tricked into running something like a malicious installer. most popular method of execution.
 
-Defense: 
+Defense:
 * Educate Users - again, this is not always effective since the average user might not know enough to be worried.
 * Two Factor Authorization - this could be having to enter a password and a special token sent to your phone.
 * Antivirus
@@ -56,7 +117,7 @@ An interesting example was an adobe installer runs a certain file with a specifi
 
 We also saw an example that reminded me of the lab from week 1 where the attacker changes the local file for resolving domain names to redirect certain websites to malicious sites. In this case, no code is left on the system so it could be a tricky problem to solve.
 
-Defense: 
+Defense:
 * Antivirus
 * Host Intrusion Prevention
 * Behavioral
@@ -66,7 +127,7 @@ _Malicious Activity_
 
 The goal of malware is primarily to collect information from a device. An attacker may be looking for passwords, credit cards, etc. There are different methods of doing this such as key logging, logs, and parsing information. Info could be sent out by different network protocols including email.
 
-Defense: 
+Defense:
 * Data Loss Prevention
 * Anti Key Logging and Screen Scrapers
 * Bot Net Detection
@@ -82,7 +143,7 @@ Malware products consist of different scanner cores that have different jobs. Di
 
 Yara is a pattern matching language for searching through files or memory. It provides a way for people to make their own scanners without access to proprietary software. It is meant for simple rapid development and is another additional tool to use in addition to malware analysis. Although auto generated strings tend not to be the best, about 99% of them are auto generated. Human created still currently tend to be the best way to create them and one aim should be to detect as much malware with as small a signature as possible. Machine learning is mentioned as something that is improving these auto generated strings which I thing will end up being extremely useful. Small yara signatures are best since it can lead to higher detection to signature-byte ratios.
 
-Tuguu is an adware vendor that has signed binaries which means Windows will recognize them as legitimate. It is meant to the receiver know that there is some integrity that what the got was from the specific vendor. They can get signed binaries since it is in fact a really simple process where you can seemingly just buy them. There are millions of signed keys from legitimate adware vendors. This has created a movement towards using digital signature reputation more than is something signed or not. 
+Tuguu is an adware vendor that has signed binaries which means Windows will recognize them as legitimate. It is meant to the receiver know that there is some integrity that what the got was from the specific vendor. They can get signed binaries since it is in fact a really simple process where you can seemingly just buy them. There are millions of signed keys from legitimate adware vendors. This has created a movement towards using digital signature reputation more than is something signed or not.
 
 Malware Automation Advantages:
 * Scale - compare more files in less time
@@ -91,7 +152,7 @@ Malware Automation Advantages:
 Disadvantages:
 * Out of Context and Prone to Evasion - not training in the real world. malware can trick controlled environments.
 
-Many efforts to automate fail because of the white problem. 'Do No Harm' is a McAfee credo which means no false positives. Things are moving to a crowd sourced approach where malicious files could be in a database people/companies can check. 
+Many efforts to automate fail because of the white problem. 'Do No Harm' is a McAfee credo which means no false positives. Things are moving to a crowd sourced approach where malicious files could be in a database people/companies can check.
 
 Cuckoo is biggest automated analysis tool that independent researchers use. It does memory dumps of malware, spoofs internet, takes screenshots of windows, full memory dump, tracks files being created/modified/downloaded. It uses randomly named url to try tricking malware from detecting its driver which is really cool. It can do both static and behavioral analysis and handle many different file formats.
 
@@ -111,9 +172,9 @@ Malware Hash: 00670F2B9631D0F97C7CFC6C764DD9D9
 Yara Signature:
 Analysis: This file hash is considered malicious (https://www.agicssecurity.com/en/filereport/00670f2b9631d0f97c7cfc6c764dd9d9/) and is known as hau.exe. Using FileInsight we can see that it begins with the characters MZ which means it is an executable. I also found several suspicious web addresses and commands for an executable called qusla.exe.
 
-I copied the file to my desktop and changed its name to bad with no extension. I then ran Cuckoo via analyzer.py on the command line while fakenet was was also executing. It put 4 csv files into the Cuckoo logs and added a file called Dx.bat and and Internet Explorer icon to the desktop. 
+I copied the file to my desktop and changed its name to bad with no extension. I then ran Cuckoo via analyzer.py on the command line while fakenet was was also executing. It put 4 csv files into the Cuckoo logs and added a file called Dx.bat and and Internet Explorer icon to the desktop.
 
-The csv file with the logs for 'bad' showed that it changed the registry and did some things on the filesystem. This suggests that it was making itself persistent through reboots and possibly searching for information on the computer. The logs also showed it tries doing something with qusla.exe and Dx.bat. 
+The csv file with the logs for 'bad' showed that it changed the registry and did some things on the filesystem. This suggests that it was making itself persistent through reboots and possibly searching for information on the computer. The logs also showed it tries doing something with qusla.exe and Dx.bat.
 
 The other log files were for reg.exe, cmd.exe, and attrib.exe. I saw bad use the attrib command in FileInsight to change permissions for qusla.exe. The logs seem to also mainly do things on the filesystem.
 
@@ -126,7 +187,7 @@ I found using just Cuckoo to be more challenging than the other tools for analys
 This week wasn't as exciting to me as last week, but was still interesting. I find the idea of machine learning to solve the automation problems someething I'd like to learn more about. As a big wrap up, the job of defended against malware consists of:
 * Discover if theres a threat - This could be from static and dynamic analysis.
 * isolate/classify/remedy the malicious code - Describe the threat and repair the damage.
-* Defend Against Future Attacks - Build more robust defenses. 
+* Defend Against Future Attacks - Build more robust defenses.
 * Describe the Attack - Everything is about understanding and being able to describe exactly what a malware sample does so it can not only be countered, but your finidings can be used in court and your clients can understand the impact and what to change in the future.
 
 Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Craig Schmugar.
@@ -140,7 +201,7 @@ This week we again were treated to lectures from Christiaan Beek. He covered adv
 
 He recommended a book called Cuckoo’s Nest by Cliff Stoll for people who find this topic interesting. I think it might actually be Cuckoo’s Egg, but if I have time I hope to add it to my reading list. It is a true story about early forensic analysis of hackers.
 
-He started with discussing incident response. It is compared to a fire fighter arriving at a scene and assessing the situation and how best to proceed in terms of priority and safety. The team is generally experts thrown together ad hoc, but it would be better to have a dedicated trained team. Communication is very important. The process from lecture is shown below. 
+He started with discussing incident response. It is compared to a fire fighter arriving at a scene and assessing the situation and how best to proceed in terms of priority and safety. The team is generally experts thrown together ad hoc, but it would be better to have a dedicated trained team. Communication is very important. The process from lecture is shown below.
 
 ![](img/week2/IR_Process.png)
 Screenshot from OSU Lecture by Christiaan Beek
@@ -231,7 +292,7 @@ Using the password to unzip the file gives you a csv file with a list of targets
 
 ![](img/week2/targets.png)
 
-Among the recovered data files, there is a creepy image that says hacked by the #GOP. It has a like of urls that all end with the file SPEData.zip. 
+Among the recovered data files, there is a creepy image that says hacked by the #GOP. It has a like of urls that all end with the file SPEData.zip.
 
 ![](img/week2/hacker.png)
 
@@ -239,7 +300,7 @@ More hints from Mr. Beek unveiled that the .bin file was the malware and that it
 
 ![](img/week2/usrpwd.png)
 
-I had found the list of targets and a list of user names and passwords. I truly relied on the hints to get through this exercise since I’m very new to forensics. I followed up with trying to find out what the malware in the .bin file was doing. I moved the files to my desktop and renamed the .bin file to challenge.exe. I brought up the process monitor, fake net, and anitspy to see if I could catch anything interesting. After executing, the process monitor showed that the malware did a lot of things in the registry and with driver files. I also noticed that a new executable was created in the same directory as the malware. I then noticed that fakenet had a lot of traffic. 
+I had found the list of targets and a list of user names and passwords. I truly relied on the hints to get through this exercise since I’m very new to forensics. I followed up with trying to find out what the malware in the .bin file was doing. I moved the files to my desktop and renamed the .bin file to challenge.exe. I brought up the process monitor, fake net, and anitspy to see if I could catch anything interesting. After executing, the process monitor showed that the malware did a lot of things in the registry and with driver files. I also noticed that a new executable was created in the same directory as the malware. I then noticed that fakenet had a lot of traffic.
 
 ![](img/week2/fakenet.png)
 
@@ -269,7 +330,7 @@ There are different types of malware and I didn’t know the details of their di
 * Trojans - sits on a host computer and sends back stolen information
 * Potentially Unwanted Program - stuff that ends up on your computer you might not want like adware
 
-The polymorphic viruses sounded particularly interesting and difficult to deal with. They can change where the malicious code is in a file and make themselves difficult to detect. 
+The polymorphic viruses sounded particularly interesting and difficult to deal with. They can change where the malicious code is in a file and make themselves difficult to detect.
 
 Computers get infected in a variety of ways, but the primary method is by the user. At some point it is mentioned that for an email with a malicious link, it typically only needs to be sent to 8-10 people to get one click. Things like USBs are another way, but I found it very interesting that PDF and Microsoft Office files were a particularly popular way to deliver malware. I never really thought about it, but the lecturer really stressed the vulnerabilities of these file types.
 
