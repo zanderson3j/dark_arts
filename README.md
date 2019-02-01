@@ -30,63 +30,37 @@ Important Points about WinDBG:
 * The db command can be useful in seeing strings.
 
 Commands:
-lm - list modules
-
-lmd m {string} - list modules and match a string
-
-bp {filename}!{function} - set a break point
-
-bl - list the break points
-
-g - go to a break point
-
-g {filename}!{function}+{offset} - go to a point in memory
-
-dd {memory/register} {number of lines}- dwords of memory
-
-db {memory/register} {number of lines} - bytes of memory
-
-u {memory/register} - disassemble to assembly
-
-.formats {number} - show value in different formats
-
-dv - shows local variables on screen
-
-.hh {command} - help/doc
-
-da {value} - shows value as an ascii string
-
-du {value} - shows value as a unicode string
-
-t - step into
-
-p - step over
-
-pt - execute and return
-
-q - quit
-
-r - view registers
-
+* lm - list modules
+* lmd m {string} - list modules and match a string
+* bp {filename}!{function} - set a break point
+* bl - list the break points
+* g - go to a break point
+* g {filename}!{function}+{offset} - go to a point in memory
+* dd {memory/register} {number of lines}- dwords of memory
+* db {memory/register} {number of lines} - bytes of memory
+* u {memory/register} - disassemble to assembly
+* .formats {number} - show value in different formats
+* dv - shows local variables on screen
+* .hh {command} - help/doc
+* da {value} - shows value as an ascii string
+* du {value} - shows value as a unicode string
+* t - step into
+* p - step over
+* pt - execute and return
+* q - quit
+* r - view registers
 
 Extended Commands:
-!teb - stack info for a thread
-
-!peb - heap info for a process
-
-!address {address} - where an address is
-
+* !teb - stack info for a thread
+* !peb - heap info for a process
+* !address {address} - where an address is
 
 Registers to Know:
-eax - often has the return value of a function
-
-eip - instruction pointer
-
-ebp - stack frame base pointer
-
-esp - stack pointer
-
-ecx - counter
+* eax - often has the return value of a function
+* eip - instruction pointer
+* ebp - stack frame base pointer
+* esp - stack pointer
+* ecx - counter
 
 
 ## Week 3 (1/29/19)
