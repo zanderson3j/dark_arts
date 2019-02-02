@@ -13,16 +13,16 @@ This week our lecturer was Brad Antoniewicz. He works for Foundstone which is a 
 
 ##### What is Hacking?
 
-Mr. Antoniewicz describes hacking as controlling a program in a certain way. It is looking at what a program does and think about what the programmer didn’t think about how it could be used. It is about manipulating software either by finding bugs in the code which are bad software or finding bad configurations/design such as weak passwords. Finding bugs in the software is more difficult to exploit and less common. This pretty closely aligns to what I understood about hacking before, although I would have thought there would be more software based attacks.
+Mr. Antoniewicz describes hacking as controlling a program in a certain way. It is looking at what a program does and thinking about what the programmer didn’t think about how it could be used. It is about manipulating software either by finding bugs in the code which are bad software or finding bad configurations/design such as weak passwords. Finding bugs in the software is more difficult to exploit and less common. This pretty closely aligns to what I understood about hacking before, although I would have thought there would be more software based attacks.
 
-Crackdowns on hacking has become more serious with the government and companies putting lots of resources into preventing it. Interestingly, it used to have a less malicious connotation. Bug bounty programs are rewards for finding vulnerabilities in companies software. Mr. Antoniewicz had a fun story about how he was threatened to be sued by a legal team at samsung for finding a vulnerability, but another part of the company had a bug bounty program and he ended up with $5,000. The rewards can apparently get very high. I think it would be cool to expose a vulnerability, but I wonder how many people get in serious trouble trying to collect a bug bounty.
+Crackdowns on hacking have become more serious with the government and companies putting lots of resources into preventing it. Interestingly, it used to have a less malicious connotation. Bug bounty programs are rewards for finding vulnerabilities in companies software. Mr. Antoniewicz had a fun story about how he was threatened to be sued by a legal team at samsung for finding a vulnerability, but another part of the company had a bug bounty program and he ended up with $5,000. The rewards can apparently get very high. I think it would be cool to expose a vulnerability, but I wonder how many people get in serious trouble trying to collect a bug bounty.
 
-There has been a shift in attacks from starting in the internet and attacking systems exposed to the internet to users by phishing and social engineering. This is because companies increased their border security. Now attacks try to compromise a user’s system, primarily from the browser, and spread to the rest of the network. This could be from email links, websites, or something else. For websites, as they render the attacker can get control of the browser which means it can do some things to the computer. I find the shift in how to hack systems very interesting, but it makes a lot of sense with all the increased security. I also wasn’t aware of how easily it seems an attacker can use the browser to do things to someones computer. In the past I thought that making your own web browser would be a cool project. Now I still think it would be, but I also am pretty sure my computer would get hacked since I’m sure it would have terrible security.
+There has been a shift in attacks from starting in the internet and attacking systems exposed to the internet. Nowadays attacks tend to target users through phishing and social engineering. This is because companies increased their border security. Now attacks try to compromise a user’s system, primarily from the browser, and spread to the rest of the network. This could be from email links, websites, or something else. For websites, as they render, the attacker can get control of the browser which means it can do some things to the computer. I find the shift in how to hack systems very interesting, but it makes a lot of sense with all the increased security. I also wasn’t aware of how easily it seems an attacker can use the browser to do things to someones computer. In the past I thought that making your own web browser would be a cool project. Now I still think it would be, but I also am pretty sure my computer would get hacked since I’m sure it would have terrible security.
 
 
 ##### WinDBG (Win-Debug)
 
-We did some small demos accompanied with a big info drop on WinDBG. I had not heard of or used WinDBG previously. It lets you stop execution of a program and examine what is happening in the program at chosen points. Mr. Antoniewicz said that when people exploit something, they try to get the program to crash and then use winDBG during it to see if there are an vulnerabilities. We just played around with it to get comfortable. Here is some useful information for using the program…
+We did some small demos accompanied with a big info drop on WinDBG. I had not heard of or used WinDBG previously. It lets you stop execution of a program and examine what is happening in the program at chosen points. Mr. Antoniewicz said that when people exploit something, they try to get the program to crash and then use winDBG during it to see if there are an vulnerabilities. We played around with it to get comfortable enough to use it in our labs. Here is some useful information for using the program…
 
 Important Points about WinDBG:
 * Shows registers, flags, and location at break points.
@@ -49,11 +49,16 @@ Commands:
 * pt - execute and return
 * q - quit
 * r - view registers
+* k - view the call stack
+* ?{math expression} - do math
 
 Extended Commands:
 * !teb - stack info for a thread
 * !peb - heap info for a process
 * !address {address} - where an address is
+* !load byakugan, !pattern_offset {string length} - find offsets each register was overwritten with
+* !threads - info on all the threads
+* !heap -p -a {address} - view the page heap at an address (such as eax)
 
 Registers to Know:
 * eax - often has the return value of a function
@@ -61,6 +66,47 @@ Registers to Know:
 * ebp - stack frame base pointer
 * esp - stack pointer
 * ecx - counter
+
+
+##### Exploitation
+
+Definitions:
+* Exploitation - Taking advantage of a vulnerability.
+* Exploit - Input or data provided to the program that causes a condition.
+* Vulnerability Trigger - Invokes the software bug to obtain control of the program, typically this causes some sort of crash or unstable state that can be taken advantage of.
+* Payload - Action to be performed when control is obtained, such as running an attacker’s code but could be anything. It sometimes is called shell code because access to the shell means you can control the computer. Interestingly, opening the calculator program is a popular way to show control of a computer.
+
+There are many different categories of vulnerabilities. One of these is called memory corruption and there are several different vulnerabilities that cause this. Memory corruption is when something is reading or writing to the stack or heap in a way that the original programmer was not expecting, and it results in behavior that isn’t normal and the attacker is looking to control.
+
+###### Attack the Stack
+
+One of these vulnerabilities we can exploit is called a stack (or buffer) overflow. This is where an attacker can go out of the bounds of a portion of memory to mess with the memory of neighboring variables
+
+Mr. Antoniewicz made an interesting point that vulnerabilities like the buffer overflow in that they have been around since 1992 but still exist today; it’s kind of crazy. He also shared Metasploit which has a lot of vulnerability triggers and payloads you can combine and use. I find it interesting how easy a lot of information like this is to come across. I had never heard of Metasploit, though it seemed like several students in the lecture had. I understand that it seems to be meant to aid in defenses, but it certainly seems controversial.
+
+During a stack overflow, the attacker can write out of bounds of the part of memory holding a variable and into neighboring parts of the stack which may hold addresses, parameters, and variables. This gives the attacker control over the entire state of the program since they can rewrite the return address which changes the path that the program takes.
+
+In order for the attacker to get their code executed during a crash, they need to first determine the state of the crash and what they will have access to such as will they be able to overwrite the EIP (instruction pointer) with a stack overflow. Next, they need to figure out the offset of the return address so that they know how much data to overflow with and what part of that data will end up in the return address. We will did this with javascript in a lab because all the major vulnerabilities in the browser are exploited with it. Then, the attacker needs to put their shell code into the memory right after where they put the return address. Finally, they need to find the address of their shell code in memory. Based on where the code is placed, the ESP (stack pointer) register will be pointing right at the location of the shell code. This is great, but the attacker needs to use the trampoline technique to get to that address. This is where the attacker causes the program to go to a known point in memory that always has the characters ‘ffe4’ which is a ‘jmp esp' instruction. This is a little trickery because the instruction there may be part of a longer string since ‘jmp esp’ is not something that should be called. This specific exploit won’t work on modern operating systems since it was so abused that it was fixed. It is very clever and fun to learn about though, and there are apparently ways around the fix.
+
+###### Attack the Heap
+
+Another vulnerability is called user after free, and it is an exploit in the heap rather than the stack. This consists of an attacker freeing an object, putting their own object in its place, putting their shell code somewhere in memory, and using the object they placed in the freed memory to cause code execution. These exploits have been very popular in the past few years in javascript and the browser.
+
+Internet Explorer uses the default process heap. The program will get 1 MB of this heap from the VirtualAlloc() due to the requested size. The low fragmentation heap in this heap can be used after the 18th call for alloc of the same size. It will consist of buckets all of that size. It has no coalescing which means that the memory buckets will all stay the same size and be available after being freed. This is useful for exploiting use after free vulnerabilities.
+
+Page heap is special heap that you can get allocated for debugging. This provides lots of information for us to examine the heap for preparing an exploit.
+
+To know where shell code is, attackers make a huge allocation that takes up most of the free memory on the heap so they know their code will be near the top of the heap. VirtualAlloc() provides memory in 64kb blocks at predictable addresses, so the attacker can predict where their shell code will be placed on the heap. This is called a heap spray. Now the attacker is able to get shell code execution by replacing the freed object with data that will call the shell code at the specified address.
+
+
+### Labs
+
+
+### Conclusion
+
+This week was my favorite so far. While previous weeks were spent analyzing malware and acting like an investigator, this week was about finding vulnerabilities and exploiting them. Almost everything was new and exciting. It shouldn't have been surprising how much knowledge of the underlying architecture is required for this kind of work, but it is vitally important to understand memory and registers (at least for the exploits we studied). Whether or not I like it enough to look into a career in this remains to be seen, but it did renew my interest in reading "Hacking - The Art of Exploitation" by Jon Erickson which I had heard about after taking 271.
+
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Brad Antoniewicz.
 
 
 ## Week 3 (1/29/19)
