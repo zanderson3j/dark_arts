@@ -126,6 +126,13 @@ After finishing this step, I was able to complete the exploit.
 
 ![](img/week4/calc.png)
 
+The use after free lab was much more difficult for me and I would have been lost without following the demo step by step. It was definitely interesting to see how the large allocation can help predict where the shell code will be in memory and how you can repeat the shell code over and over and line it up in the memory blocks. I think an important part of this lab was to introduce some new tools. The first is the page heap, which allows you to get much more information about things on the heap than you could with just normal winDBG. You need to enable it for the process you want to use it for before entering into winDBG.
+
+![](img/week4/page1.png)
+![](img/week4/page2.png)
+
+The other tool is called VMMap, which shows how the memory looks for a process. The way it looks is a bit different than I would have expected since we normally picture things in memory as laid out very evenly as opposed to all over the place. Practically it makes sense, but I understand why it would be presented differently for conceptual purposes. I actually couldn't find VMMap on my virtual machine, but was able to see Mr. Antoniewicz use it in lecture. He was able to use the tool to find out how big the blocks of heap memory were and the addresses they were at.
+
 
 ### Conclusion
 
