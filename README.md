@@ -105,6 +105,27 @@ I find this method less intuitive than a stack overflow. I had to review some ma
 
 ### Labs
 
+This week we had some demos and labs to follow along with. The demos got us familiar with winDBG, and the labs used it to help exploit different vulnerabilities in a version (or module) of Internet Explorer.
+
+I found winDBG to be challenging since it has been over a year since taking CS 271, which is our computer architecture and assembly course. I reviewed some of the old notes from that class to get more comfortable with what I was looking at. Even so, it was useful to be able to follow along with the lecturer because there were many tricks used in the labs that I would not have thought of. Fun fact from the demo, 31337 stands for eleet which apparently means cool in hacker speak.
+
+![](img/week4/winDBG.png)
+
+Both labs had the same end goal, to exploit Internet Explorer in order to get the calculator program in windows to open. This is a popular way to show you can get a program to do something it wasn't intended to do. The first lab did this using a stack overflow, and the second lab did this by using a use after free. The mechanics of these were both discussed in the lecture section of this blog post.
+
+The stack overflow was fun to see step by step. Since the goal is to fill the eip register with an address that will execute shell code, the first step was to find the location of eip and see that I could fill it. This was done using !pattern_offset from the byuakugan module. I then modified the javascript code that was running in the browser to put 42424242 into eip.
+
+![](img/week4/eipOffset.png)
+![](img/week4/fillEip.png)
+
+Then, I searched for and found an address where the 'jmp esp' command was. I put this address into eip. A big trick which I found the lecture helpful for was that there is a return 4 after the function in the assembly code to account for. It meant that after filling eip, 4 more bytes needed to be filled to reach esp, which is where I needed to put the shell code. To do this, I just filled in 4 bytes that meant nothing after the address placed in eip. This resulted in the following javascript.
+
+![](img/week4/ret4.png)
+
+After finishing this step, I was able to complete the exploit.
+
+![](img/week4/calc.png)
+
 
 ### Conclusion
 
