@@ -2,6 +2,32 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 5 (2/12/19)
+
+### Lecture
+
+This week’s lectures were from Aditya Kapoor from Intel Security. His academic background sounded more grounded in research than the other lecturers, and his topic was memory manipulation. Specifically, he discussed rootkits and bootkits, and through several demonstrations, he showed us some new tools to understand these attacks. For me, this week was very challenging to follow, but I feel like I was able to take away the main points.
+
+#### Rootkit
+
+Rootkits are very interesting pieces of malware. What makes them so difficult to recognize and study is that they are very stealthy. One goal of the rootkit is to remain undetected so it can operate indefinitely. For instance, an example of a rootkit is a key logger which is a program that will record the keystrokes of a user and log them to an attacker. It will do this without any interruption to the user, so they won’t notice. It was nice getting to understand rootkits better this week because they have been mentioned a lot and it seemed like we were just supposed to know what they are.
+
+Also, rootkits are able to hide themselves from the operating system so they could even hide from tools like windows and process explorer. Essentially, a computer calls commands from a user mode or a kernel mode. The user mode would be common commands in a computer program, but if the program wants to do any I/O or communicate with peripherals, it needs to pass control to the operating system which can make system calls in kernel mode. This is the operating system making calls on behalf of the running program. The kernel mode calls have access to all the memory of the computer and malware can be strategically placed in here so it can be difficult to detect. I remember the concept of the operating system taking over to make system calls from our operating systems course. That class was in linux, but the concept is still the same. There was also a lot of review this week in regards to threads and processes which I also recall from the operating systems class. 
+
+We learned about SSDT rootkit exploits which stands for System Service Descriptor Table. This has kernel mode commands which all have an assigned address in memory. An attacker can figure out these addresses and exploit this table. They can use a technique called hooking to run a malicious program when certain calls are made. Mr. Kapoor used an example of a banana thief to describe this concept. Imagine fruit is being shipped from an origin to a destination, but in the middle there is a thief who is looking into the packages and taking out the bananas. A rootkit in the SSDT exploit is like the banana thief. It places itself somewhere in memory, changes the SSDT table to call it instead of a certain system call, and then when it is finished it calls the system call the user was expecting so it goes unnoticed. I feel like maybe a better analogy for a rootkit would be someone who is just recording how many types of each fruit there are, because I don’t think a rootkit would actually take the bananas and risk getting noticed.
+
+Mr. Kapoor showed a list of several techniques used by rootkits, but we mainly focused on the SSDT technique.
+
+#### Bootkit
+
+We also quickly covered bootkits. Bootkits are malware that is run during startup so they can infect things like the master boot record, and can even install a rootkit.
+
+### Labs
+
+### Conclusion
+
+The week was a little overwhelming when looking into the details, but looking at the big picture, it was easier too digest. I enjoyed finally learning more about rootkits since it is a term I had heard many times, but only loosely understood. It was a challenging experience and good information, but I am looking forward to getting into higher level sercurity in the next few weeks, because I feel it will be more directly related to things I will be working on at my job and in the future. 
+
 ## Week 4 (2/5/19)
 
 ### Lecture
