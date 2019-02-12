@@ -80,20 +80,26 @@ At this point, I opened my debugger VM and started winDBG. I couldn’t use the 
 
 For NtEnumerateValueKey, NtQueryDirectoryFile, and NtQuerySystemInformation, I used Tuluka to find the starting offset in wininit.sys where calls to those functions actually go. I then set breakpoints and stepped through the calls until I hit the calls back to the original functions. From there I could calculate the offset from where wininit.sys starts executing to where it calls the original function.
 
-NtEnumerateValueKey
+#### NtEnumerateValueKey
 
 ![](img/week5/e1.png)
 ![](img/week5/e2.png)
 
-NtQueryDirectoryFile
+Starting at 0x1480 and calling at 0x14d4 gives an offset of 84 bytes.
+
+#### NtQueryDirectoryFile
 
 ![](img/week5/q1.png)
 ![](img/week5/q2.png)
 
-NtQuerySystemInformation
+Starting at 0x1050 and calling at 0x1086 gives an offset of 54 bytes.
+
+#### NtQuerySystemInformation
 
 ![](img/week5/i1.png)
 ![](img/week5/i2.png)
+
+Starting at 0xf00 and calling at 0xf1a gives an offset of 26 bytes.
 
 
 ### Conclusion
