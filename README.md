@@ -101,10 +101,11 @@ Starting at 0x1050 and calling at 0x1086 gives an offset of 54 bytes.
 
 Starting at 0xf00 and calling at 0xf1a gives an offset of 26 bytes.
 
-
 ### Conclusion
 
 The week was a little overwhelming when looking into the details, but looking at the big picture, it was easier too digest. I enjoyed finally learning more about rootkits since it is a term I had heard many times, but only loosely understood. It was a challenging experience and good information, but I am looking forward to getting into higher level sercurity in the next few weeks, because I feel it will be more directly related to things I will be working on at my job and in the future.
+
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Aditya Kapoor.
 
 ## Week 4 (2/5/19)
 
