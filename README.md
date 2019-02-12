@@ -12,7 +12,7 @@ This week’s lectures were from Aditya Kapoor from Intel Security. His academic
 
 Rootkits are very interesting pieces of malware. What makes them so difficult to recognize and study is that they are very stealthy. One goal of the rootkit is to remain undetected so it can operate indefinitely. For instance, an example of a rootkit is a key logger which is a program that will record the keystrokes of a user and log them to an attacker. It will do this without any interruption to the user, so they won’t notice. It was nice getting to understand rootkits better this week because they have been mentioned a lot and it seemed like we were just supposed to know what they are.
 
-Also, rootkits are able to hide themselves from the operating system so they could even hide from tools like windows and process explorer. Essentially, a computer calls commands from a user mode or a kernel mode. The user mode would be common commands in a computer program, but if the program wants to do any I/O or communicate with peripherals, it needs to pass control to the operating system which can make system calls in kernel mode. This is the operating system making calls on behalf of the running program. The kernel mode calls have access to all the memory of the computer and malware can be strategically placed in here so it can be difficult to detect. I remember the concept of the operating system taking over to make system calls from our operating systems course. That class was in linux, but the concept is still the same. There was also a lot of review this week in regards to threads and processes which I also recall from the operating systems class. 
+Also, rootkits are able to hide themselves from the operating system so they could even hide from tools like windows and process explorer. Essentially, a computer calls commands from a user mode or a kernel mode. The user mode would be common commands in a computer program, but if the program wants to do any I/O or communicate with peripherals, it needs to pass control to the operating system which can make system calls in kernel mode. This is the operating system making calls on behalf of the running program. The kernel mode calls have access to all the memory of the computer and malware can be strategically placed in here so it can be difficult to detect. I remember the concept of the operating system taking over to make system calls from our operating systems course. That class was in linux, but the concept is still the same. There was also a lot of review this week in regards to threads and processes which I also recall from the operating systems class.
 
 We learned about SSDT rootkit exploits which stands for System Service Descriptor Table. This has kernel mode commands which all have an assigned address in memory. An attacker can figure out these addresses and exploit this table. They can use a technique called hooking to run a malicious program when certain calls are made. Mr. Kapoor used an example of a banana thief to describe this concept. Imagine fruit is being shipped from an origin to a destination, but in the middle there is a thief who is looking into the packages and taking out the bananas. A rootkit in the SSDT exploit is like the banana thief. It places itself somewhere in memory, changes the SSDT table to call it instead of a certain system call, and then when it is finished it calls the system call the user was expecting so it goes unnoticed. I feel like maybe a better analogy for a rootkit would be someone who is just recording how many types of each fruit there are, because I don’t think a rootkit would actually take the bananas and risk getting noticed.
 
@@ -24,9 +24,81 @@ We also quickly covered bootkits. Bootkits are malware that is run during startu
 
 ### Labs
 
+This week we were introduced to some new tools and some labs and demonstrations. The main focus was on the Agony lab and its tools for analyzing rootkit infections.
+
+#### New Tools
+
+LiveKD - This tool allows you to debug the system kernel live. It is very useful and allows you to read kernel memory, but not pause and walk through it locally. Another kernel debugger can be used with winDBG to connect to a remote VM and pause and walk through instructions.
+
+Tuluka - This program allows you to find things that a rootkit might be hiding on a computer and even gives extra functionality to restore altered addresses in the SSDT to their original calls.
+
+#### Agony
+
+For this lab, I first opened my debugee VM and copied the agony rootkit to my desktop. I changed the name to bad and used Cuckoo and FakeNet to analyze it.
+
+![](img/week5/beginning.png)
+
+After executing, FakeNet showed requests for a gmail installer and a file called core.dat from Microsoft. It is possible these are unrelated to the malware.
+
+![](img/week5/fakeNet.png)
+
+I also noticed that a file named e2r355.ren was placed on the desktop. I then checked the files captured by Cuckoo, and found: sortdefault.nls.bin, bad.bin, and tires.dll.bin. The sort by default was 2,876 KB which was much larger than the other 2 which were 51 KB and 2 KB respectively.
+
+![](img/week5/fileOnDesktop.png)
+![](img/week5/dirSearch.png)
+
+Cuckoo had a csv log file for the bad executable. Looking through it, I found the is downloaded the e2r355.ren file and messed around in the registry and with some system calls. This led me to open e2r355.ren in FileInsight, but I couldn’t determine if anything was suspicious. It looked like a bunch of styling. The only thing I found that might be interesting was some mentions of not unhiding something.
+
+![](img/week5/log1.png)
+![](img/week5/log2.png)
+![](img/week5/fileInsight.png)
+
+I next started looking at the analyzer directory from which Cuckoo was launched. If I did regular searches on the directory, the contents looked normal, but if I searched for *.sys, another file called winit.sys appeared. Mr. Kapoor said this is related to different searches done with dir using different apis in their implementation. Opening the file with notepad shows that it starts with MZ indicating it might be a binary executable.
+
+![](img/week5/dirSearch.png)
+![](img/week5/notepad.png)
+
+I then started up Tuluka, went to SST, and sorted by suspicious. There were 3 suspicious items highlighted in red. The functions were:
+* NtEnumerateValueKey - Enumerates registry values.
+* NtQueryDirectoryFile - Ran during dir *.* search.
+* NtQuerySystemInformation - Gives system information and enumerates processes.
+
+![](img/week5/tuluka.png)
+
+It showed that the typical memory references for these commands were actually changed to point to the wininit.sys file I found in the analyzer directory. This suggests this file is hooking the system calls which allow it to hide by altering what happens when those SSDT functions are called.
+
+I then copied LiveKD from the shared drive and launched it. I used the disassemble command “u <mem address>” to look at the assembly code at the original and current memory location of NtEnumerateValueKey. The original location has the code for the NtEnumerateValueKey function, and the new location has instructions at an offset off of wininit.sys. This suggests that wininit.sys has different functionality at different offsets in its executable. Since it is a rootkit, I expect it will eventually call back to the original address of NtEnumerateValueKey. I also used the command “dps nt!KiServiceTable L 191” to see all of the system apis (or SSDT) and found the locations where wininit.sys inserted the addresses of some of its offsets.
+
+![](img/week5/liveKd.png)
+![](img/week5/dp1.png)
+![](img/week5/dp2.png)
+![](img/week5/dp3.png)
+
+At this point, I opened my debugger VM and started winDBG. I couldn’t use the kernel symbol for NtEnumerateValueKey despite loading and reloading the symbols, so I used the original addresses from Tuluka to find the code for the that kernel function. NtEnumerateValueKey had a different name, so I think something was strange with the symbols.
+
+![](img/week5/nameError.png)
+
+For NtEnumerateValueKey, NtQueryDirectoryFile, and NtQuerySystemInformation, I used Tuluka to find the starting offset in wininit.sys where calls to those functions actually go. I then set breakpoints and stepped through the calls until I hit the calls back to the original functions. From there I could calculate the offset from where wininit.sys starts executing to where it calls the original function.
+
+NtEnumerateValueKey
+
+![](img/week5/e1.png)
+![](img/week5/e2.png)
+
+NtQueryDirectoryFile
+
+![](img/week5/q1.png)
+![](img/week5/q2.png)
+
+NtQuerySystemInformation
+
+![](img/week5/i1.png)
+![](img/week5/i2.png)
+
+
 ### Conclusion
 
-The week was a little overwhelming when looking into the details, but looking at the big picture, it was easier too digest. I enjoyed finally learning more about rootkits since it is a term I had heard many times, but only loosely understood. It was a challenging experience and good information, but I am looking forward to getting into higher level sercurity in the next few weeks, because I feel it will be more directly related to things I will be working on at my job and in the future. 
+The week was a little overwhelming when looking into the details, but looking at the big picture, it was easier too digest. I enjoyed finally learning more about rootkits since it is a term I had heard many times, but only loosely understood. It was a challenging experience and good information, but I am looking forward to getting into higher level sercurity in the next few weeks, because I feel it will be more directly related to things I will be working on at my job and in the future.
 
 ## Week 4 (2/5/19)
 
