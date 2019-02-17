@@ -2,6 +2,79 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 6 (2/19/19)
+
+### Lecture
+
+This week’s lectures covered Network Security. They were presented by Geoffrey Cooper and Ram Venugopalan who are both from Intel Security. They didn’t go into much detail about their respective backgrounds and work, but they were both very knowledgeable on the topic and led interesting lectures.
+
+We need network security since threats come in from the network and can cause many different issues such as stealing sensitive information and overloading servers. We started with an exercise on the Robustness Principle from Jonathan Postel.
+
+[Agree with robustness]
+
+There are several different strategies to secure a network. Some I was familiar with before, but there were some new ones as well.
+
+Positive Policy: This is essentially whitelisting things that you have decided to allow into your network. This strategy gives an advantage to the defender because it forces the attacker to guess what whitelisting polices are implemented. It also limits the attack surface which means that there are less vulnerabilities for the attacker to exploit, and other protections that are being used can be more effective since they have less to worry about. Furthermore, the amount of things being whitelisted is much smaller and easier to predict than the things that could be blacklisted. One disadvantage is that it can detect that something is a threat but not what that threat is.
+
+Firewalls/Security Zones: There can be defined zones in a network, and the traffic that is allowed to go between zones can be handled by a firewall. Firewalls will filter network traffic based on a chosen policy. We did a small exercise to think of what policy might be implemented between a theoretical network with security zones. We also saw that there are different types of firewalls. Two of these are called Web Gateway and Email Gateway. A Web Gateway is more specific than a firewall. It gets a better view of the data and can block specific parts of a website whereas a firewall would block the whole thing. An Email Gateway can filter spam and malware that might come through email.
+
+[security zones]
+
+A common theme in this class has been a layered defense. We want to have a layered approach from the network in since there are many ways to infect a machine. Network Security works best when it is layered itself such as having a firewall filter data before hitting an intrusion protection system.
+
+A very interesting layer of Network Security I had never heard about was the SIEM. This gets logs from all the different security devices. Using these, it can give an awareness of what is likely to be attacked and can alert or defend.
+
+Intrusion Protection: These systems differ from firewalls in that they blacklist instead of whitelist things. They are good at detecting well understood threats and work quickly; however, there is a risk of having false positives.  
+
+Honeynets: This are similar to honeypots except their goal is more to distract attackers rather than capture malware. They are phony networks set up to take up an attacker’s time instead of going after the real systems. An attacker can even capture files and info from them. Its an interesting idea, but I’m interested in how effective they are.
+
+Quarantine: When a threat is detected, it can be put into a quarantine where it will be all alone and unable to do actual harm. This gives defenders the ability to analyze the behavior of the threat.
+
+Reputation: This involves giving a score of trustability to control access and decide how to handle requests from certain IPs / Mac addresses and locations. Big data is used to get information such as being able to tell 50% of attacks come from a particular group of IPs. I had heard the term big data before, but its meaning in this context was new to me.
+
+There are many different products that can be used and layered for Network Security. As an administrator, the goal is to understand how to use the products by checking what they do and fitting them to their needs.
+
+Deep Stateful Inspection: This is a new strategy I learned which goes through everything something coming in would do.
+
+Next Gen Firewall: Mr. Cooper joked the name is more for selling new products, but with the newer firewall the deeper you go into a packet ,the more detailed your policy can be. This gives the ability to block parts of things which sounds like what the Web Gateway is able to do.
+
+Man in the middle refers to intercepting messages and doing something wth them between the source and destination. MITM can be used for both good and bad. A good man in the middle might protect the destination from receiving something malicious, but a bad one might change your request to your bank to send money from your account the the attacker’s.
+
+HMAC: Detects MITM. It is a one way function that takes a large number of bits and converts to small number. You can’t invert it, so it makes it harder to be corrupted since the attacker would need to crack the HMAC. 
+
+Public Key Cryptography: Another way to protect against corrupted packets from MITM attacks. We learned about this in our networking class. There is a private key on the host computer to unlock messages, and a public key on other computers to lock messages being sent. This reduces the need for N^2 keys to sent secure messages to many people to something more manageable.
+
+One interesting theme that keeps coming up in this course is even when you think you’re safe, there is probably a workaround. We discussed the use of trusted certificates between hosts being a secure way to send messages, but even these certificates could be altered so it’s hard to know what to trust.
+
+Reconnaissance: This is gathering information about a network. There are two types: active and passive. Active is for an attack looking to exploit vulnerabilities on a network and needs information about the system. Passive is an attacker observing and learning about people or organizations on a network.
+
+An active attacker will scan the network for vulnerabilities. It will try to vary how it is getting information in order to avoid detection. A fast scan is easier to detect. This makes sense since the network would see the same source doing different suspicious things on the network. The SIEM logs help find slow scans, but even with those logs, slow scans are hard to detect.
+
+Spoofing: This is where an attacker is able to put spoofed values into messages in order to bypass security or cause general havoc. My favorite example, which I had not heard of before, was the LAN DOS attack. This is where an attacker spoofs the source address to be the address of the destination they are sending the message to. It then causes the designation machine to make a loop of requests back to itself which kills the stack. Spoofing defenses consist of things like checking that the port makes sense and asking: would a request you made look like this?
+
+Denial of Service: These attacks consist of taking up a system’s resources to the point where it slows it down or causes it to crash. This can be targeted at specific websites, governments, or businesses for different purposes. The slashdot version of this is an accidental denial of service. It’s basically like when someone uses reddit to share a website they made and it gets really popular. There is an unexpected amount of traffic to the server asking for the site and it crashes. They like to call it the reddit kiss or squeeze of death. Another type of this attack that I didn’t know about previously is DNS amplification attacks. This is where the dos sends out a ton of data to a spoofed address causing it to crash. There is apparently an enormous amount of data that a DNS server can send.
+
+We learned there is a site called Shodan that has a collection of all the vulnerable routers in the world. This is yet another thing that seems to reoccur every week. There are so many resources for an attack to use that are easy to find on the internet. I’m curious about what is on some of them, and I’m sure visiting them will put me on a list…although the professor joked taking this class probably already did that.
+
+Bugs and Backdoors: Bugs are unintentional vulnerabilities in a network, and backdoors are intentional. 
+
+Mr. Venugopalan talked about a project where he wanted a filter that would remove anything that didn’t follow the RFC standards. It turns out that many legitimate protocols and messages aon’t follow these tightly, so we need workarounds for some protocols. This seems pretty unideal and is interesting.
+
+Fragmentation Attacks: This was new attack I learned about which fragments requests into many small packets and makes them arrive in the wrong order. This make the designation use a lot of resources to reassemble the message. This can be prevented with stateful packet filtering.
+
+Tunneling: Wrap your protocol with a different protocol which can hide it if not looking at all layers.
+
+I learned two new ways to narrow down if file is suspicious:
+* Prevalence: How often and where was it seen.
+* Page: When was it first seen.
+
+### Conclusion
+
+This week presented a lot of new information as well as a lot of review from our Networks course. I enjoyed the lab work and liked learning about so many attacks that I hadn't heard of before. I think that there is some information from this week that might be helpful as I continue in my career.
+
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Geoffrey Cooper and Ram Venugopalan.
+
+
 ## Week 5 (2/12/19)
 
 ### Lecture
