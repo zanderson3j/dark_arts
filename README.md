@@ -8,9 +8,18 @@
 
 This week’s lectures covered Network Security. They were presented by Geoffrey Cooper and Ram Venugopalan who are both from Intel Security. They didn’t go into much detail about their respective backgrounds and work, but they were both very knowledgeable on the topic and led interesting lectures.
 
-We need network security since threats come in from the network and can cause many different issues such as stealing sensitive information and overloading servers. We started with an exercise on the Robustness Principle from Jonathan Postel.
+We need network security since threats come in from the network and can cause many different issues such as stealing sensitive information and overloading servers. We started with an exercise on the Robustness Principle from Jonathan Postel. The green parts I agree with, the red I disagree, and the final black
+paragraph I'm undecided on.
 
-[Agree with robustness]
+![](img/week6/robust.png)
+
+I think when designing new software, it should be able to fail gracefully. The only way to get close to that is by preparing for every possible combination of errors. Assuming that someone with bad intentions will try to break your code is a good exercise to think of new possibilities.
+
+I disagree that the most serious problems on the internet were just caused by low-probability errors. I think significant damage has been and could be done by human malice. I assume this was written before a number of high profile hacking cases that were very dangerous or damaging such as the cases at sony or stuxnet.
+
+I think the ability for software to adapt to change is very important. With technological innovation occurring so quickly, it would be impossible to keep up if the infrastructure to support it all had to be updated for every change. Being adaptability lets everything evolve around it.
+
+I was torn on the last point because while you don't want to risk causing a failure on a host you are sending to, it isn't fair that you have to limit your capabilities because other hosts are inadequate. So in principle it makes sense since it makes things more likely to work, but it seems like it encourages complacency that limits certain advances.
 
 There are several different strategies to secure a network. Some I was familiar with before, but there were some new ones as well.
 
@@ -18,7 +27,11 @@ Positive Policy: This is essentially whitelisting things that you have decided t
 
 Firewalls/Security Zones: There can be defined zones in a network, and the traffic that is allowed to go between zones can be handled by a firewall. Firewalls will filter network traffic based on a chosen policy. We did a small exercise to think of what policy might be implemented between a theoretical network with security zones. We also saw that there are different types of firewalls. Two of these are called Web Gateway and Email Gateway. A Web Gateway is more specific than a firewall. It gets a better view of the data and can block specific parts of a website whereas a firewall would block the whole thing. An Email Gateway can filter spam and malware that might come through email.
 
-[security zones]
+Below are the results of an exercise to define the firewall rules between different security zones. I
+tried filling it out to the best of my knowledge, but I feel I probably made the network really insecure.
+
+![](img/week6/zone.png)
+![](img/week6/rules.png)
 
 A common theme in this class has been a layered defense. We want to have a layered approach from the network in since there are many ways to infect a machine. Network Security works best when it is layered itself such as having a firewall filter data before hitting an intrusion protection system.
 
@@ -40,7 +53,7 @@ Next Gen Firewall: Mr. Cooper joked the name is more for selling new products, b
 
 Man in the middle refers to intercepting messages and doing something wth them between the source and destination. MITM can be used for both good and bad. A good man in the middle might protect the destination from receiving something malicious, but a bad one might change your request to your bank to send money from your account the the attacker’s.
 
-HMAC: Detects MITM. It is a one way function that takes a large number of bits and converts to small number. You can’t invert it, so it makes it harder to be corrupted since the attacker would need to crack the HMAC. 
+HMAC: Detects MITM. It is a one way function that takes a large number of bits and converts to small number. You can’t invert it, so it makes it harder to be corrupted since the attacker would need to crack the HMAC.
 
 Public Key Cryptography: Another way to protect against corrupted packets from MITM attacks. We learned about this in our networking class. There is a private key on the host computer to unlock messages, and a public key on other computers to lock messages being sent. This reduces the need for N^2 keys to sent secure messages to many people to something more manageable.
 
@@ -56,7 +69,7 @@ Denial of Service: These attacks consist of taking up a system’s resources to 
 
 We learned there is a site called Shodan that has a collection of all the vulnerable routers in the world. This is yet another thing that seems to reoccur every week. There are so many resources for an attack to use that are easy to find on the internet. I’m curious about what is on some of them, and I’m sure visiting them will put me on a list…although the professor joked taking this class probably already did that.
 
-Bugs and Backdoors: Bugs are unintentional vulnerabilities in a network, and backdoors are intentional. 
+Bugs and Backdoors: Bugs are unintentional vulnerabilities in a network, and backdoors are intentional.
 
 Mr. Venugopalan talked about a project where he wanted a filter that would remove anything that didn’t follow the RFC standards. It turns out that many legitimate protocols and messages aon’t follow these tightly, so we need workarounds for some protocols. This seems pretty unideal and is interesting.
 
