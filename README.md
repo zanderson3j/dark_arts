@@ -2,6 +2,99 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 7 (2/26/19)
+
+### Lecture
+
+This week our lecturer was Cedric Cochin from Intel Security / McAfee Labs. He works in computer and network security, and this web presented on Web Security. He was a white hat hacker for a while, but he wrote some software to test security and eventually ended up at McAfee. I really enjoyed he teaching style as he had lots of examples when discussing different exploits and tools. I find this really helpful for understanding.
+
+Before we started, we were cautioned that doing the things we would learn about today could get us jail time. My first thought, and one of the students thankfully asked the question, was what about when you’re exploiting vulnerabilities for prize money or just to inform an organization of their security holes. Mr. Cochin said it is a grey area and to be careful. The main point was to immediately disclose what you did and found, and you need to show that you did not get any personal benefit. Personally, I wouldn’t mess with anything unless it was clear that finding vulnerabilities would result in prize money.
+
+On the web, attacks get old because the browsers learn to block them quickly. It is a war that moves very fast. Mr. Cochin said that in lab, we will use the firefox browser since chrome blocks the exploit we want to do. I wonder if firefox has caught up since the lectures are from several years ago. It makes sense, but I find it interesting how much work needs to go into getting the correct version of all the software on your machine in order to practice certain exploits and defenses.
+
+The types of attacks involving the web have evolved over the years. Early on there was a lot attacks where an attacker would copy a website and send a link through email or some other means. Victims would visit the site and give away personal information thinking they were at a legitimate site. There were also attacks like an archive bomb. Moving on, attackers started doing browser exploits like the stack overflow and use after free exploits from a couple weeks ago. They also started using sql injection. There came  point where there were so many different browsers being used that the best way to attack the most people was through phasing and 3rd party plug ins most people used. Theses are things like adobe reader and flash. Finally, they started to stay in memory and work from there, rather than in the browser, since modern browsers have a lot of security. Web security is so important because 95% of malware is delivered by the web / internet.
+
+When attacking a web browser, the main points of attack are the network / protocol, the DOM, and the UI. In the past, javascript was just in the DOM, but in modern web browsers you can find it in every layer. This has led to all attacks having some javascript involved. Like we have heard most weeks, malware is aimed for Windows machines.
+
+User Level Attacks:
+
+* Social Engineering - Get an individual to do something willingly for your malicious intent. Users are lazy clickaholics, so their actions can be directed towards malicious content such as executables, browser exploits, and malicious forms.
+* Phishing - Make a website that looks and acts just like the user wants…except it is malicious.
+* SEO (Search Engine Optimization) Poisoning - Try to get high in search result rankings so more users click on a malicious link. Google text search has gotten very good at preventing this, although their image search is still vulnerable. Other search engines evidently have some ground to make up. Interestingly, developers are a common target. If an attacker gets their response to a common issue on a site like stack overflow to be ranked high, they can get many developers to maybe use a malicious library or something.
+* Fake Updates and Fake AV - Get user to download bad programs thinking they’re good programs like anti virus software.
+* WYSIWYG (What You See Is What You Get) - Use funky urls that look similar to real ones in order to get users to visit them.
+* Social Media Attacks - Use social media and online groups to get people to reveal personal or secret information.
+* Malvertising - Seed specific ads for a target group of people through an advertising company, and the ad can redirect to a malicious site.
+* Waterhole Attacks - Go where a target group of people go, such as forums, and hack and deliver a payload to redirect users to something malicious.
+
+With so many attacks it is hard to stay safe. There are several solutions being used.
+
+* URL Reputation - Score urls on their reputation, if the score is low it could be malicious.
+* URL / Search result annotations - Search engines can annotate potentially malicious sites.
+* PCI - Make sure credit card information is safe when using online.
+* Signed - Signed and certified destinations and downloads.
+* Current AV - Up to date anti virus.
+* Safe URL Shorteners - Use a url from a url shortener. Also look at the bottom of the browser to see where a url is actually taking you.
+* Content Provider and End User Education - This is what is says. I don’t have a lot of faith in the average end user to be that safe online until they get burned once or twice.
+
+An interesting point made by Mr. Cochin was that APT () Advanced Persistent Threat) is a bit of a buzz word in the industry. All it really means is that something broke in and stayed somewhere for an extended period of time. We learned this vocabulary in the first week of classes. The topic of credit card safety also brought up the cultural difference in the US and most of the world where we allow a waiter to take our card out of sight, but most of the world will have the waiter bring the card reader to the table. I lived in China for a couple years and this was definitely the case. It makes so much more sense to me that the card reader should be brought to the table, but it never really seemed weird until leaving the country.
+
+Besides the users, the attack surface of the web also includes the browser and 3rd party plug ins. Malware can even get to the browser from a local desktop. There was a side conversation about how two factor authentication helps web security, but as always there is a work around where the attacker can hack into the mobile phone getting a security pin as well as the browser.
+
+It was interesting to learn that modern browsers have layers of sandboxing to prevent attackers from leaving browsers or tabs, but there still needs to be more security since there are always ways to escape.
+
+Browser Exploits:
+
+* Content / Script Obfuscation - Javascript is a big and ugly language with many ways to write programs. This means you can write programs that are very hard to understand. You can even encode strings and fetch code from different parts of the browser, like the DOM, to build a malicious script. An interesting side note is that many sites use the same obfuscation tools to compact their own javascript code. This is because shorter code can be delivered faster and thus reach more users.
+* MITM (Man in the Middle) - We talked a lot about this previously. Attackers can intercept and modify network traffic since many things are still unencrypted. They can steal information or insert things to redirect the request. Even scarier, it can also work on home networks since many network router names are easy to guess. Attackers can guess the name, redirect the user, steal passwords, and even re-image the router so they can add their own software. It is safer for malware to hide in memory than in the browser.
+* DNS Spoofing - We spoke about this previously as well. Something new was that something like a USB can redirect network requests to a different DNS server to lead users to malicious sites.
+* Clickjacking / UI Redressing - Overlay things in the browser so the user will click on something that looks correct but actually does something else. I have seen sites with video players that do this. They will have a button that says close window, but clicking it will bring you to another site.
+* SQL Injection - Put SQL code directly into the database for when the server doesn’t correctly filter inputs for code. There are many different types of SQL with different vulnerabilities. Mr. Cochin wrote a cool tool to determine what kind of SQL a site is using and what it was vulnerable to. I enjoyed learning about these exploits since I had an understanding of what it was before, but did’t realize the great variance in attacks.
+* Client Site Scripting (XSS) - Inject client side script into user’s browser.
+* Client Site Request Forgery (xsrf) - Trick user’s browser into sending requests to a target on your behalf.
+
+Mr. Cochin spoke briefly about a trick used for honey nets in relation to SQL injection attacks. You can throw an attacker off with error messages that will make them think you are something you’re not. For example, make them think you are using a different programming language. This is mainly for honey nets, because he said in the real world it would be best to not send an error message. At work, we write some apis, and we return custom error messages so we don’t reveal too much information. We also don’t explode the underlying data types, which I did’t understand the purpose of before, but it makes more sense now.
+
+Web Malware Toolbox:
+
+* Alexa - Shows how prevalent a given domain name is. Very prevalent and not prevalent are typically not suspected as being malicious. Malicious domains typically rise in prevalence very quickly.
+* archive.org - Website that allows you to go back in time and see a web page at a point it was hacked or doing something bad.
+* ipvoid - Check IP against a blacklist which is formed from other times an IP was used. Attackers often reuse old IPs. Typically, normal sites has many IP addresses, and bad ones usually have none and no mail server.
+* checkshorturl - Find where a short url actually goes.
+* Site Dossier - Show the bigger picture around a URL/domain.
+* Webutation - Web reputation score.
+* Web Inspector - Inspects the URL results.
+* Virus Total (URL Total) - Scan the web, has information about URL files, and aggregates results from different AV softwares.
+* Linux jwhois - Info about the person/entity who made a site. Often the creator will have their name(s) tied to it, and they may have a bad reputation.
+*  Linux Dig - This is a DNS lookup utility.
+* IOC (Indicators of Compromise) - Connects the dots from all the clues and gives the full picture. Looks very interesting and helpful.
+
+Web Malware Research Tools:
+
+There are many proxies available which allow you to fuzz content.
+
+* Phantomjs - Web Kit (these replay the browser so you can automate things like clicking and going around) to interact with site in automatic fashion. This is very helpful since there are 100x more urls than malware samples to examine.
+* jsunpack - Makes sense of what is happening and understand the scripts.
+* Burp Suite - Can be used like Tamper Data. It spiders across the web which is like a type of web crawler.
+* Webscarab - Similar to Burp Suite.
+* Firebug - Like Tamper Data.
+
+URL Classification:
+
+* Manual - Person goes through and records everything they do (may get one shot when calling a URL). This is typically reserved for top threats since it is time consuming.
+* Static - Just scans the page without rendering it.
+* Low Interaction - Typically web kits, They execute quickly.
+* High Interaction - This is like a web kit, but it slows down and acts more like a user since sometimes malware will sleep to trick a web kit.
+* Host/Lexical URL Classification - Use rules to classify URL based on the way it is. For example, some things with good URLs are they have a prefix like ‘www’, are short since thats more expensive, and end in something common like .com.
+* Graph Based Classification - Traverse a graph to determine who is guilty by association. I have used Neo4j before which is an interesting way to organize data.
+* The Expert System - This classifies URLs without looking at their content. URLs are continually reprocessed until a conclusion is reached since each iteration can reveal new information.
+
+### Conclusion
+
+I found the material this week much easier to understand and interesting. The lecturer was great, and the material was more relevant to my work. Even though we don't get experience with all of the tools that we talk about in lecture, I enjoy learning about their specific use cases.
+
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Cedric Cochin.
+
 ## Week 6 (2/19/19)
 
 ### Lecture
