@@ -89,6 +89,18 @@ URL Classification:
 * Graph Based Classification - Traverse a graph to determine who is guilty by association. I have used Neo4j before which is an interesting way to organize data.
 * The Expert System - This classifies URLs without looking at their content. URLs are continually reprocessed until a conclusion is reached since each iteration can reveal new information.
 
+### Labs
+
+We had two labs this week. The first one used a new tool called Web Goat. Web Goat is an insecure web application which people can use to practice exploiting vulnerabilities. It is both useful and fun to work with.
+
+![](img/week7/webgoat.png)
+
+The other lab involved expanding a python script to classify URLs as malicious or not. I managed to build a set of rules using a training data set in order to classify URLs in an unknown data set. We were told that about 50% of the URLs were malicious. I got 1013 good and 1011 malicious. I'm not sure how accurate it was, but it seems promising. I found it pretty straightforward to find the optimum value to compare against for individual measurements or properties, but it was a little finicky combining them. I ended up finding that being pretty aggressive led to better results with the training data set, so thats what I went with.
+
+Sample Results From the URL Classification:
+
+![](img/week7/classy.png)
+
 ### Conclusion
 
 I found the material this week much easier to understand and interesting. The lecturer was great, and the material was more relevant to my work. Even though we don't get experience with all of the tools that we talk about in lecture, I enjoy learning about their specific use cases.
