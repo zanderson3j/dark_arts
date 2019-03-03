@@ -2,6 +2,57 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 8 (2/26/19)
+
+### Lecture
+
+This week we had lectures on Messaging Security from Eric Peterson. Mr. Peterson is a Research Manager at Intel Security / McAfee. Interestingly, he has a background in aviation and went to school to be a pilot. He ended up doing email security at small startup he said he still works for. The company protects about 30 million inboxes. His lectures involved a lot of participation and conversion which I enjoyed even though I couldn't directly take part.
+
+We started by talking about phishing. Phishing can be described as taking information for malicious purposes. A layered defense is used in order to combat this, and the last layer of that is the user; therefore, they need to be educated. We took a phishing quiz which is meant to test how susceptible people are to phishing attacks. I noticed there seems to be some ambiguity around what is legitimate and what is phishing. Also, determining whether or not something is phishing without any context was sometimes challenging. A number of the sample in the test didn't seem legitimate, but they didn't seem to be seeking information either so I don't think they were phishing. For example, the first sample was a linkedIn coupon email which didn't seem legitimate, but also didn't seem to be seeking any information. I guess it could've led to a malicious site to get info on the user. We saw that a common phishing method is to send an email to ask someone to verify an email or username. There was also an interesting observation that something like a wells fargo banking email could be legit, but since it looks so bad and has click bait links, it probably makes it really easy for phishing attacks to look similar. Mr. Peterson said that HR workers are apparently more susceptible to phishing attacks and are also the worst at identifying attacks. This stresses the need for education on the subject for HR employees.
+
+New Terms:
+* Spam/Ham - Spam is illegitimate mail and Ham is legitimate.
+* Spamtrap/Honeypot - This is an unprotected computer used to collect spam emails. It has no reason for emails to be sent to it (it is brand new or retired) so any messages i gets can be then classified as spam.
+* Botnet - A series of compromised machines used together for malicious purposes.
+* Snowshoe Spam - Real snowshoes distribute someones weight. Snowshoe Spam spreads the load of a spam footprint across many IP addresses in order to get around reputation filters. These are the hardest to detect.
+* Phishing vs Spearphishing - To the masses vs To specific targets like companies or people.
+* RBL - Realtime Blackhole List, blocks spam senders that are on the list.
+* Heuristics - Rules for filtering spam. This can be string matches, regex, and meta rules which look at many parts of the email together and are more effective and general.
+* Bayesian (Statistical) - Get tokens from spam and ham and calculate their prevalence to rationalize blocking or not blocking messages containing them. This is similar to my approach for blocking URLs with a certain file extension from last week.
+
+The Spamming Classics:
+* 419 Phishing - This is advanced fee scamming like the Nigerian prince scam. The 419 is a reference to a law that makes this illegal.
+* Canadian Pharmacy - This is a pharmacy link with a legitimate looking site. It gets around heuristics by embedding text within html scan tags.
+* Pump n Dump - This is artificially inflating stock by sending spam to get people to buy it.
+
+Spam is fought with reputation-driven (ip, message, etc) and content-driven (heuristics) approaches.
+
+Tools:
+* DIG
+* WHOIS
+* Postgres - Advanced open source sql database.
+* Regex Coach - You put in regular expressions and a target string. The program then highlights the parts of the target string that match the regex. I have used something similar to this when building regular expressions at work. I haven't had to do anything too complex which is good since they seem to get really complex. It is definitely a good skill to improve though.
+
+There are billions of emails that need to be scanned for spam, so there are different techniques for studying and filtering them. Such as:
+* Parsing - Reads and extracts the keys parts of metadata for information.
+* Grouping - Groups data by things like window of time, subject, url, etc.
+* Aggregation - Aggregate values over time for something like distinct subject lines as maybe some are known to be spam.
+* Identification of Outliers - Try to understand situations where something that is usually called spam might not be sometimes.
+
+Since there are so many spam samples, there is a lot of automation in identification and filtering. However, as we have seen in previous weeks, humans can typically come up with better rules but are slower. Accuracy and time both need to be considered then when exploring options for filtering spam. This sounds tedious and like a job I wouldn't enjoy, but designing the automated algorithms might be interesting.
+
+We looked a little bit at the SMTP protocol for a spam and ham message. One thing that stood out was how easy it is for a sender to spoof who the email is from. This seems like something that could be mended. It was also interesting to see an email header which shows the path that a message took. You read them from the bottom up, and I think the formatting makes it a little tricky to read.
+
+We did a spam rule exercise where we listed observations about a spam and ham message. The observations were things like subject lines, origins, punctuation, links, images, and much more. Mr. Peterson then showed us how to get a picture of these observations by plotting them on intersecting lines and then connecting the points to make a shape. We can then make the same plot for new emails and check if they fit the shape of ham or spam. His example only used a few observations, but in the real world I could see these getting extremely complex.
+
+### Labs
+
+### Conclusion
+
+I found the material this week to be very easy to follow. It wasn't as interesting to me as other weeks, but I felt the lecturer was good and very knowledgeable. I think the idea of classifying messages as spam or ham doesn't seem as exciting as some of the other things we have learned, but it is definitely important; as is education about it. 
+
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Eric Peterson.
+
 ## Week 7 (2/26/19)
 
 ### Lecture
