@@ -30,8 +30,8 @@ The Spamming Classics:
 Spam is fought with reputation-driven (ip, message, etc) and content-driven (heuristics) approaches.
 
 Tools:
-* DIG
-* WHOIS
+* DIG - DNS lookup utility.
+* WHOIS - Domain name lookup.
 * Postgres - Advanced open source sql database.
 * Regex Coach - You put in regular expressions and a target string. The program then highlights the parts of the target string that match the regex. I have used something similar to this when building regular expressions at work. I haven't had to do anything too complex which is good since they seem to get really complex. It is definitely a good skill to improve though.
 
