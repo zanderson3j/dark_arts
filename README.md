@@ -8,11 +8,13 @@
 
 This week we had lectures on Messaging Security from Eric Peterson. Mr. Peterson is a Research Manager at Intel Security / McAfee. Interestingly, he has a background in aviation and went to school to be a pilot. He ended up doing email security at small startup he said he still works for. The company protects about 30 million inboxes. His lectures involved a lot of participation and conversion which I enjoyed even though I couldn't directly take part.
 
-We started by talking about phishing. Phishing can be described as taking information for malicious purposes. A layered defense is used in order to combat this, and the last layer of that is the user; therefore, they need to be educated. We took a phishing quiz which is meant to test how susceptible people are to phishing attacks. I noticed there seems to be some ambiguity around what is legitimate and what is phishing. Also, determining whether or not something is phishing without any context was sometimes challenging. A number of the sample in the test didn't seem legitimate, but they didn't seem to be seeking information either so I don't think they were phishing. For example, the first sample was a linkedIn coupon email which didn't seem legitimate, but also didn't seem to be seeking any information. I guess it could've led to a malicious site to get info on the user. We saw that a common phishing method is to send an email to ask someone to verify an email or username. There was also an interesting observation that something like a wells fargo banking email could be legit, but since it looks so bad and has click bait links, it probably makes it really easy for phishing attacks to look similar. Mr. Peterson said that HR workers are apparently more susceptible to phishing attacks and are also the worst at identifying attacks. This stresses the need for education on the subject for HR employees.
+We started by talking about phishing. Phishing can be described as taking information for malicious purposes. A layered defense is used in order to combat this, and the last layer of that is the user; therefore, they need to be educated. We took a phishing quiz which is meant to test how susceptible people are to phishing attacks. I noticed there seems to be some ambiguity around what is legitimate and what is phishing. Also, determining whether or not something is phishing without any context was sometimes challenging. A number of the samples in the test didn't seem legitimate, but they didn't seem to be seeking information either, so I don't think they were phishing. For example, the first sample was a linkedIn coupon email which didn't seem legitimate, but also didn't seem to be seeking any information. I guess it could've led to a malicious site to get info on the user. 
+
+We saw that a common phishing method is to send an email to ask someone to verify an email or username. There was also an interesting observation that something like a wells fargo banking email could be legit, but since it looks so bad and has click bait links, it probably makes it really easy for phishing attacks to look similar. Mr. Peterson said that HR workers are apparently more susceptible to phishing attacks and are also the worst at identifying attacks. This stresses the need for education on the subject for HR employees.
 
 New Terms:
 * Spam/Ham - Spam is illegitimate mail and Ham is legitimate.
-* Spamtrap/Honeypot - This is an unprotected computer used to collect spam emails. It has no reason for emails to be sent to it (it is brand new or retired) so any messages i gets can be then classified as spam.
+* Spamtrap/Honeypot - This is an unprotected computer used to collect spam emails. It has no reason for emails to be sent to it (it is brand new or retired) so any messages it gets can be then classified as spam.
 * Botnet - A series of compromised machines used together for malicious purposes.
 * Snowshoe Spam - Real snowshoes distribute someones weight. Snowshoe Spam spreads the load of a spam footprint across many IP addresses in order to get around reputation filters. These are the hardest to detect.
 * Phishing vs Spearphishing - To the masses vs To specific targets like companies or people.
@@ -47,9 +49,11 @@ We did a spam rule exercise where we listed observations about a spam and ham me
 
 ### Labs
 
+The main lab this week involved identifying spam messages with our own rules. The challenge was to be both accurate and get the most matches with a single database update. 
+
 ### Conclusion
 
-I found the material this week to be very easy to follow. It wasn't as interesting to me as other weeks, but I felt the lecturer was good and very knowledgeable. I think the idea of classifying messages as spam or ham doesn't seem as exciting as some of the other things we have learned, but it is definitely important; as is education about it. 
+I found the material this week to be very easy to follow. It wasn't as interesting to me as other weeks, but I felt the lecturer was good and very knowledgeable. I think the idea of classifying messages as spam or ham doesn't seem as exciting as some of the other things we have learned, but it is definitely important, as is education about it. 
 
 Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Eric Peterson.
 
