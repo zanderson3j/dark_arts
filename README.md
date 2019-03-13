@@ -2,6 +2,19 @@
 
 ## Student: Zachary Anderson (andezach)
 
+## Week 9-10 (3/15/19)
+
+This session we had lectures on Mobile Security from Fernando Ruiz who is a McAfee researcher from Chile. He had two colleagues from the same research team who seemed to be present primarily for support. The first was Alex Hinchliffe who has been at McAfee for 15 years in PC Security and now Mobile Security. The other was Carlos Castillo.
+
+We started with a little history on the mobile space. The first mobile phone you could buy released in 1984. IT was $4,000 and allowed you to talk for 30 minutes. It's pretty remarkable how much that has changed up to today.
+
+Up until 2007 there were about 4 companies in the market for mobile operating systems. These included Symbian and Blackberry. Then Apple entered the scene with iOS on the iPhone and started the smartphone revolution. Over the years iOS has stayed fairly steady in their market share while Andriod has grown significantly. It surpassed Apple in 2012.
+
+Apple iOS is proprietary and only on Apple devices. It fully integrates with Apple software/services.
+Microsoft Windows phone is also proprietary and fully integrates with Microsoft software/services.
+Google Android was aquired by Google in 2007 and is free and open source...for the most part. It is customized by diferent carriers which can lead to buggy versions.
+Ubuntu Touch and Firefox OS are a few mobile operating systems I didn't know about that looked interesting.
+
 ## Week 8 (3/5/19)
 
 ### Lecture
