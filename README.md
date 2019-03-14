@@ -15,6 +15,53 @@ Microsoft Windows phone is also proprietary and fully integrates with Microsoft 
 Google Android was aquired by Google in 2007 and is free and open source...for the most part. It is customized by diferent carriers which can lead to buggy versions.
 Ubuntu Touch and Firefox OS are a few mobile operating systems I didn't know about that looked interesting.
 
+Android is a much more open environment which seems like it could open itself up to more exploits; however, both iOS and Android run in a sandbox which seems more secure. That being said, a common theme in this course has been that there is a way around pretty much everything.
+
+There are ways on both iOS and Android to bypass system security. This could be used for both innocent and malicious reasons:
+* Jailbreak iOS - Jailbreaking an Apple phone allows you to run code that is not authorized by Apple and write to parts of the system that are unavailable by default. Attackers could use this to run malware, and oddly enough, the root password has a default of 'alpine' which seems like an easy way for an attacker to gain control. Previously, I had mainly heard about jailbreaking your phone in a more positive light. You can use it to unlock carrier locked phones. I know many people who did this in order to use their cell phones with sim cards over seas.
+* Rooting Android - The purpose is to just gain access to the root system. This could definitely be used in malicious ways, but you could also use it to remove default installed apps. I have read about certain phones coming with apps you can't uninstall since the company that made the app paid for it to be on there. This would be a way to remove that.
+
+Fun fact, the Android security versions are all named after sweets like froyo and kitkat.
+
+We switched gears in lecture and started discussing mobile malware history. In the beginning, it was pretty tame where malware would do things like consume the battery (kind of like apple and old iPhones). It then started corrupting files/apps and using backdoors. During the smartphone revolution, there wasn't much malware. I feel like the huge change in technology must have required the hackers to get more familiar with the new landscape and let it build up users. Eventually they picked up:
+* Symbian Worm Yxes (2009) - Malware that now actually steals information.
+* Ikea (2009) - First malware on iOS. It uses that default root password 'alpine' to gain control and ransoms jailbroken phones.
+* Fakeplayer (2010) - First Android malware. It pretends to be a media player but actually sends text messages to premium rate numbers.
+...Android malware takes off in 2011...
+* Geinimi (2010) - The first Android botnet. It is third party software that looks legitimate (known as repackaged) but steals sensitive information. It was used in China since they didn't use Android Market and have access to certain software on there. I lived in China for 2 years, and pretty much all the software on my phone there looked like know off versions of major apps, so I wouldn't be surprised if this sort of thing is still really common there.
+* Pjapps - This is similar Geinimi and was also used in China, but it intercepts incoming sms messages and does something with them.
+
+After a piece of malware put lots of malware on the Android Market, Google removed malicious apps from phones remotely and from the store. The fix that involved loading security updates to phones remotely was then of course exploited itself.
+
+Looking at Android, Android does sandboxing diferent than linux in that each application gets its own sandbox with its own (different) user ids. The virtual machines are designed to be more efficeint with memory and power. The Android runtime uses ELF files.
+
+Android Components:
+* Activities - These are single screen UIs. Each page of an app is a different activity.
+* Services - Background processes without a UI and doesn't require user interaction.
+* Broadcast Receivers - Gets system wide broadcast announcements such as when a text message is received.
+* Content Providers - Manages data that is shared across apps such contacts. This is one of the oficial ways Android allows inter process communication. The others are intents, which are messages shared between apps such as starting an activity), and binder, which is one process calling a routine in another process.
+
+The Android Manifest file declares app permissions, states the minimum required android api version, lists the components (activities, services, etc), and the hardware/software features required by the app. This is a great thing to look at to understand what an app is doing in static analysis. It also has the java package name which is a unique identifier.
+
+Tools and Resources for Analysis:
+* Android SDK Manager - Allows you to run an Android emulator for dynamic analysis.
+* Android Debug Bridge - Connects to Android devices, including emulators, to connect with them via the command line.
+* AXMLPrinter2 -Decompiles encoded XML in order to view it.
+* Androguard - Provides lots of tools for examining Android files.
+* Dex2jar - Converts a dex file to a jar.
+* JD-GUI - Decompiles jar files.
+* APK Tool - Decompiles encoded XML in order to view it.
+* JadX - Decompiles dex file to java.
+* virustotal.com - Virus reports for Android files.
+
+Static analysis from class essentially involved decompiling and reviewing the Andriod Manifest, and decompiling the source code into java in order to understand what it is doing. For dynamic analysis, you run an emulator / virtual machine, connect to it with the Android Debug Bridge, and run some malware to see what happens. You can also use wireshark to view network traffic for payloads.
+
+The APK contains the files used by the app, libraries, digital certificate, images, XML, manifest, and compiled XML views.
+
+One of the versions of Android Security is called "froyo", and we covered some exploits on it by "the android exploit crew":
+* Exploid - Exploits a vulnerability in udev which is a linux kernel device manager. In froyo it doesn't verify the commands came from the kernel, so attackers can run some commands to gain root access.
+* RATC (Rage Against the Cage) - Fails set user id with the Android Debug Bridge in a way that allows it root access.
+
 ## Week 8 (3/5/19)
 
 ### Lecture
