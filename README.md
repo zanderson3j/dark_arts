@@ -62,6 +62,12 @@ One of the versions of Android Security is called "froyo", and we covered some e
 * Exploid - Exploits a vulnerability in udev which is a linux kernel device manager. In froyo it doesn't verify the commands came from the kernel, so attackers can run some commands to gain root access.
 * RATC (Rage Against the Cage) - Fails set user id with the Android Debug Bridge in a way that allows it root access.
 
+One issue with Android Security Software is a fragmentation problem. Many older versions of Andriod Security are still in use and are thus still vulnerable to exploits that were solved in newer versions. At the time of the lectures there is/was an exploit called "towelroot" that a large percentage of users were still vulnerable too. With different carriers adding their own modiications to the OS, mobile security seems like an extremely complex and wide field.
+
+To do native payload analysis, you first find the ELF binaries in api files. These are typically hidden in the assests folder with any file extension to hide it (like png). You can then use any hex editor to find the ELF header; however, sometimes it is encrypted and requires more work. The payload is often executed by loading it as a library or executing shell commands.
+
+
+
 ## Week 8 (3/5/19)
 
 ### Lecture
