@@ -8,11 +8,11 @@ This session we had lectures on Mobile Security from Fernando Ruiz who is a McAf
 
 We started with a little history on the mobile space. The first mobile phone you could buy released in 1984. IT was $4,000 and allowed you to talk for 30 minutes. It's pretty remarkable how much that has changed up to today.
 
-Up until 2007 there were about 4 companies in the market for mobile operating systems. These included Symbian and Blackberry. Then Apple entered the scene with iOS on the iPhone and started the smartphone revolution. Over the years iOS has stayed fairly steady in their market share while Andriod has grown significantly. It surpassed Apple in 2012.
+Up until 2007 there were about 4 companies in the market for mobile operating systems. These included Symbian and Blackberry. Then Apple entered the scene with iOS on the iPhone and started the smartphone revolution. Over the years iOS has stayed fairly steady in their market share while Android has grown significantly. It surpassed Apple in 2012.
 
 Apple iOS is proprietary and only on Apple devices. It fully integrates with Apple software/services.
 Microsoft Windows phone is also proprietary and fully integrates with Microsoft software/services.
-Google Android was aquired by Google in 2007 and is free and open source...for the most part. It is customized by diferent carriers which can lead to buggy versions.
+Google Android was acquired by Google in 2007 and is free and open source...for the most part. It is customized by different carriers which can lead to buggy versions.
 Ubuntu Touch and Firefox OS are a few mobile operating systems I didn't know about that looked interesting.
 
 Android is a much more open environment which seems like it could open itself up to more exploits; however, both iOS and Android run in a sandbox which seems more secure. That being said, a common theme in this course has been that there is a way around pretty much everything.
@@ -33,13 +33,13 @@ We switched gears in lecture and started discussing mobile malware history. In t
 
 After a piece of malware put lots of malware on the Android Market, Google removed malicious apps from phones remotely and from the store. The fix that involved loading security updates to phones remotely was then of course exploited itself.
 
-Looking at Android, Android does sandboxing diferent than linux in that each application gets its own sandbox with its own (different) user ids. The virtual machines are designed to be more efficeint with memory and power. The Android runtime uses ELF files.
+Looking at Android, Android does sandboxing different than linux in that each application gets its own sandbox with its own (different) user ids. The virtual machines are designed to be more efficient with memory and power. The Android runtime uses ELF files.
 
 Android Components:
 * Activities - These are single screen UIs. Each page of an app is a different activity.
 * Services - Background processes without a UI and doesn't require user interaction.
 * Broadcast Receivers - Gets system wide broadcast announcements such as when a text message is received.
-* Content Providers - Manages data that is shared across apps such contacts. This is one of the oficial ways Android allows inter process communication. The others are intents, which are messages shared between apps such as starting an activity), and binder, which is one process calling a routine in another process.
+* Content Providers - Manages data that is shared across apps such contacts. This is one of the official ways Android allows inter process communication. The others are intents, which are messages shared between apps such as starting an activity), and binder, which is one process calling a routine in another process.
 
 The Android Manifest file declares app permissions, states the minimum required android api version, lists the components (activities, services, etc), and the hardware/software features required by the app. This is a great thing to look at to understand what an app is doing in static analysis. It also has the java package name which is a unique identifier.
 
@@ -54,7 +54,7 @@ Tools and Resources for Analysis:
 * JadX - Decompiles dex file to java.
 * virustotal.com - Virus reports for Android files.
 
-Static analysis from class essentially involved decompiling and reviewing the Andriod Manifest, and decompiling the source code into java in order to understand what it is doing. For dynamic analysis, you run an emulator / virtual machine, connect to it with the Android Debug Bridge, and run some malware to see what happens. You can also use wireshark to view network traffic for payloads.
+Static analysis from class essentially involved decompiling and reviewing the Android Manifest, and decompiling the source code into java in order to understand what it is doing. For dynamic analysis, you run an emulator / virtual machine, connect to it with the Android Debug Bridge, and run some malware to see what happens. You can also use wireshark to view network traffic for payloads.
 
 The APK contains the files used by the app, libraries, digital certificate, images, XML, manifest, and compiled XML views.
 
@@ -62,11 +62,34 @@ One of the versions of Android Security is called "froyo", and we covered some e
 * Exploid - Exploits a vulnerability in udev which is a linux kernel device manager. In froyo it doesn't verify the commands came from the kernel, so attackers can run some commands to gain root access.
 * RATC (Rage Against the Cage) - Fails set user id with the Android Debug Bridge in a way that allows it root access.
 
-One issue with Android Security Software is a fragmentation problem. Many older versions of Andriod Security are still in use and are thus still vulnerable to exploits that were solved in newer versions. At the time of the lectures there is/was an exploit called "towelroot" that a large percentage of users were still vulnerable too. With different carriers adding their own modiications to the OS, mobile security seems like an extremely complex and wide field.
+One issue with Android Security Software is a fragmentation problem. Many older versions of Andriod Security are still in use and are thus still vulnerable to exploits that were solved in newer versions. At the time of the lectures there is/was an exploit called "towelroot" that a large percentage of users were still vulnerable too. With different carriers adding their own modifications to the OS, mobile security seems like an extremely complex and wide field.
 
-To do native payload analysis, you first find the ELF binaries in api files. These are typically hidden in the assests folder with any file extension to hide it (like png). You can then use any hex editor to find the ELF header; however, sometimes it is encrypted and requires more work. The payload is often executed by loading it as a library or executing shell commands.
+To do native payload analysis, you first find the ELF binaries in api files. These are typically hidden in the assets folder with any file extension to hide it (like png). You can then use any hex editor to find the ELF header; however, sometimes it is encrypted and requires more work. The payload is often executed by loading it as a library or executing shell commands.
 
+Android banking trojans are attacks to get access to bank accounts. User authentication is done by something you know, have, and or are. For banking, we commonly use a PIN or card or both. Online, we often just use ID and Password for things. Other countries require a number that is texted to you from a bank for authentication. Android malware can steal the number sent by sms, after a PC is already hacked for other needs, to access an account. It is typically done by infecting a PC, sending the user to a fake web page, having them download a security app which is malware, then intercepting the bank sms for the next auth. Zitmo and Spitmo are variations of this. Faketoken came later and is a fake bank app on the phone that tries to steal the web password; therefore, it doesn’t need to deal with the PC and get sms. Several others followed this model after.
 
+The Android Security wiki has a list of tools useful for Android security analysis.
+
+We discussed server side polymorphic malware which seems very challenging to analyze:
+* Fakeinstaller - Many variants. Pretends to be the installer of an app and sends sms to premium rate customers. This malware lives on the server and morphs each time you download it. It is the first of its kind and shot up in prevalence in 2012; in part because it morphs every time and therefore there were more unique samples.
+* Daily Dex File - Change the dex file used by many fake apps daily.
+
+Perhaps more challenging is the analyze dynamic and remote code execution:
+* Anserverbot - A Chinese repackaged app. It dynamically loads and invokes code that the app will run which makes analysis difficult. Also, it can hide from and interfere with security software. It has two payloads that act as sqlite databases.
+* Android webview addjsif - Attackers can insert Java code into a webview application which can include shell commands and native code.
+
+And more challenges come along with Android obfuscation:
+* Identifier Remaining - Android/Java is easy to reverse engineer, so you can make an application look like it is doing something else with obscure names for things. Proguard is an open source tool to obfuscate java code.
+Strings can be encrypted as well. Attackers can put bad instructions in the binary that won’t harm execution, but will confuse decompilers. Also the manifest can be obfuscated in a way to make it difficult to decompile the xml. For these situations, you need to remove the bad characters and recompile it before doing static analysis.
+
+Finally, we talked a little about Android bootkits:
+* oldboot - First one. A suspicious app is uninstalled by security software, but reinstalled after reboot and can spy on the user. It was installed on Chinese devices. The conspiracy theorist in me wonders about things like this, such as the huawei case in the news, and how much certain governments can have installed on certain devices to collect intelligence.
+
+### Conclusion
+
+Lecture this week was a little challenging to follow since it felt more like a massive info dump than a discussion. We didn't have much back and forth while different malware cases were being presented. That being said, the labs were interesting to follow along with, and there was a lot of useful information. It will be interesting to see how mobile security evolves as more and more things that we used to use a computer for are now being done on our handheld devices.
+
+Works Cited: All Information Used in Preparing this Post came from the Oregon State Lectures from Fernando Ruiz.
 
 ## Week 8 (3/5/19)
 
