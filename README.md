@@ -13,7 +13,7 @@ Up until 2007 there were about 4 companies in the market for mobile operating sy
 Apple iOS is proprietary and only on Apple devices. It fully integrates with Apple software/services.
 Microsoft Windows phone is also proprietary and fully integrates with Microsoft software/services.
 Google Android was acquired by Google in 2007 and is free and open source...for the most part. It is customized by different carriers which can lead to buggy versions.
-Ubuntu Touch and Firefox OS are a few mobile operating systems I didn't know about that looked interesting.
+Ubuntu Touch and Firefox OS are a few mobile operating systems I didn't know about that looked interesting. I'm not sure how prominent they are today.
 
 Android is a much more open environment which seems like it could open itself up to more exploits; however, both iOS and Android run in a sandbox which seems more secure. That being said, a common theme in this course has been that there is a way around pretty much everything.
 
@@ -23,15 +23,21 @@ There are ways on both iOS and Android to bypass system security. This could be 
 
 Fun fact, the Android security versions are all named after sweets like froyo and kitkat.
 
-We switched gears in lecture and started discussing mobile malware history. In the beginning, it was pretty tame where malware would do things like consume the battery (kind of like apple and old iPhones). It then started corrupting files/apps and using backdoors. During the smartphone revolution, there wasn't much malware. I feel like the huge change in technology must have required the hackers to get more familiar with the new landscape and let it build up users. Eventually they picked up:
+![](img/week910/security.png)
+Source: Oregon State Lecture from Fernando Ruiz.
+
+We switched gears in lecture and started discussing mobile malware history. In the beginning, it was pretty tame where malware would do things like consume the battery (which sounds kind of like Apple and old iPhones today). It then started corrupting files/apps and using backdoors. During the smartphone revolution, there wasn't much malware. I feel like the huge change in technology must have required the hackers to get more familiar with the new landscape and let it build up users. Eventually they picked up:
 * Symbian Worm Yxes (2009) - Malware that now actually steals information.
 * Ikea (2009) - First malware on iOS. It uses that default root password 'alpine' to gain control and ransoms jailbroken phones.
 * Fakeplayer (2010) - First Android malware. It pretends to be a media player but actually sends text messages to premium rate numbers.
 ...Android malware takes off in 2011...
-* Geinimi (2010) - The first Android botnet. It is third party software that looks legitimate (known as repackaged) but steals sensitive information. It was used in China since they didn't use Android Market and have access to certain software on there. I lived in China for 2 years, and pretty much all the software on my phone there looked like know off versions of major apps, so I wouldn't be surprised if this sort of thing is still really common there.
+* Geinimi (2010) - The first Android botnet. It is third party software that looks legitimate (known as repackaged) but steals sensitive information. It was used in China since they didn't use Android Market and have access to certain software on there. I lived in China for 2 years, and pretty much all the software on my phone there looked like knock off versions of major apps, so I wouldn't be surprised if this sort of thing is still really common there.
 * Pjapps - This is similar Geinimi and was also used in China, but it intercepts incoming sms messages and does something with them.
 
-After a piece of malware put lots of malware on the Android Market, Google removed malicious apps from phones remotely and from the store. The fix that involved loading security updates to phones remotely was then of course exploited itself.
+In 2011, after a piece of malware called droiddream put lots of malware on the Android Market, Google removed malicious apps from phones remotely and from the store. The fix that involved loading security updates to phones remotely was then of course exploited itself. This is the year that Android malware grew a lot.
+
+![](img/week910/graph.png)
+Source: Oregon State Lecture from Fernando Ruiz.
 
 Looking at Android, Android does sandboxing different than linux in that each application gets its own sandbox with its own (different) user ids. The virtual machines are designed to be more efficient with memory and power. The Android runtime uses ELF files.
 
@@ -41,7 +47,7 @@ Android Components:
 * Broadcast Receivers - Gets system wide broadcast announcements such as when a text message is received.
 * Content Providers - Manages data that is shared across apps such contacts. This is one of the official ways Android allows inter process communication. The others are intents, which are messages shared between apps such as starting an activity), and binder, which is one process calling a routine in another process.
 
-The Android Manifest file declares app permissions, states the minimum required android api version, lists the components (activities, services, etc), and the hardware/software features required by the app. This is a great thing to look at to understand what an app is doing in static analysis. It also has the java package name which is a unique identifier.
+The Android Manifest file declares app permissions, states the minimum required Android api version, lists the components (activities, services, etc), and the hardware/software features required by the app. This is a great thing to look at to understand what an app is doing in static analysis. It also has the Java package name which is a unique identifier.
 
 Tools and Resources for Analysis:
 * Android SDK Manager - Allows you to run an Android emulator for dynamic analysis.
@@ -51,10 +57,10 @@ Tools and Resources for Analysis:
 * Dex2jar - Converts a dex file to a jar.
 * JD-GUI - Decompiles jar files.
 * APK Tool - Decompiles encoded XML in order to view it.
-* JadX - Decompiles dex file to java.
+* JadX - Decompiles dex file to Java.
 * virustotal.com - Virus reports for Android files.
 
-Static analysis from class essentially involved decompiling and reviewing the Android Manifest, and decompiling the source code into java in order to understand what it is doing. For dynamic analysis, you run an emulator / virtual machine, connect to it with the Android Debug Bridge, and run some malware to see what happens. You can also use wireshark to view network traffic for payloads.
+Static analysis from class essentially involved decompiling and reviewing the Android Manifest, and decompiling the source code into Java in order to understand what it is doing. For dynamic analysis, you run an emulator / virtual machine, connect to it with the Android Debug Bridge, and run some malware to see what happens. You can also use Wireshark to view network traffic for payloads.
 
 The APK contains the files used by the app, libraries, digital certificate, images, XML, manifest, and compiled XML views.
 
@@ -79,7 +85,7 @@ Perhaps more challenging is the analyze dynamic and remote code execution:
 * Android webview addjsif - Attackers can insert Java code into a webview application which can include shell commands and native code.
 
 And more challenges come along with Android obfuscation:
-* Identifier Remaining - Android/Java is easy to reverse engineer, so you can make an application look like it is doing something else with obscure names for things. Proguard is an open source tool to obfuscate java code.
+* Identifier Remaining - Android/Java is easy to reverse engineer, so you can make an application look like it is doing something else with obscure names for things. Proguard is an open source tool to obfuscate Java code.
 Strings can be encrypted as well. Attackers can put bad instructions in the binary that won’t harm execution, but will confuse decompilers. Also the manifest can be obfuscated in a way to make it difficult to decompile the xml. For these situations, you need to remove the bad characters and recompile it before doing static analysis.
 
 Finally, we talked a little about Android bootkits:
@@ -160,7 +166,7 @@ On the web, attacks get old because the browsers learn to block them quickly. It
 
 The types of attacks involving the web have evolved over the years. Early on there was a lot attacks where an attacker would copy a website and send a link through email or some other means. Victims would visit the site and give away personal information thinking they were at a legitimate site. There were also attacks like an archive bomb. Moving on, attackers started doing browser exploits like the stack overflow and use after free exploits from a couple weeks ago. They also started using sql injection. There came  point where there were so many different browsers being used that the best way to attack the most people was through phasing and 3rd party plug ins most people used. Theses are things like adobe reader and flash. Finally, they started to stay in memory and work from there, rather than in the browser, since modern browsers have a lot of security. Web security is so important because 95% of malware is delivered by the web / internet.
 
-When attacking a web browser, the main points of attack are the network / protocol, the DOM, and the UI. In the past, javascript was just in the DOM, but in modern web browsers you can find it in every layer. This has led to all attacks having some javascript involved. Like we have heard most weeks, malware is aimed for Windows machines.
+When attacking a web browser, the main points of attack are the network / protocol, the DOM, and the UI. In the past, Javascript was just in the DOM, but in modern web browsers you can find it in every layer. This has led to all attacks having some Javascript involved. Like we have heard most weeks, malware is aimed for Windows machines.
 
 User Level Attacks:
 
@@ -191,7 +197,7 @@ It was interesting to learn that modern browsers have layers of sandboxing to pr
 
 Browser Exploits:
 
-* Content / Script Obfuscation - Javascript is a big and ugly language with many ways to write programs. This means you can write programs that are very hard to understand. You can even encode strings and fetch code from different parts of the browser, like the DOM, to build a malicious script. An interesting side note is that many sites use the same obfuscation tools to compact their own javascript code. This is because shorter code can be delivered faster and thus reach more users.
+* Content / Script Obfuscation - Javascript is a big and ugly language with many ways to write programs. This means you can write programs that are very hard to understand. You can even encode strings and fetch code from different parts of the browser, like the DOM, to build a malicious script. An interesting side note is that many sites use the same obfuscation tools to compact their own Javascript code. This is because shorter code can be delivered faster and thus reach more users.
 * MITM (Man in the Middle) - We talked a lot about this previously. Attackers can intercept and modify network traffic since many things are still unencrypted. They can steal information or insert things to redirect the request. Even scarier, it can also work on home networks since many network router names are easy to guess. Attackers can guess the name, redirect the user, steal passwords, and even re-image the router so they can add their own software. It is safer for malware to hide in memory than in the browser.
 * DNS Spoofing - We spoke about this previously as well. Something new was that something like a USB can redirect network requests to a different DNS server to lead users to malicious sites.
 * Clickjacking / UI Redressing - Overlay things in the browser so the user will click on something that looks correct but actually does something else. I have seen sites with video players that do this. They will have a button that says close window, but clicking it will bring you to another site.
@@ -528,13 +534,13 @@ Mr. Antoniewicz made an interesting point about vulnerabilities like the buffer 
 
 During a stack overflow, the attacker can write out of bounds of the part of memory holding a variable and into neighboring parts of the stack which may hold addresses, parameters, and variables. This gives the attacker control over the entire state of the program since they can rewrite the return address which changes the path that the program takes.
 
-In order for the attacker to get their code executed during a crash, they need to first determine the state of the crash and what they will have access to; such as, will they be able to overwrite the EIP (instruction pointer) with a stack overflow. Next, they need to figure out the offset of the return address so that they know how much data to overflow with and what part of that data will end up in the return address. We did this with javascript in a lab because all the major vulnerabilities in the browser are exploited with it. Then, the attacker needs to put their shell code into the memory right after where they put the return address. Finally, they need to find the address of their shell code in memory. Based on where the code is placed, the ESP (stack pointer) register will be pointing right at the location of the shell code. This is great, but the attacker needs to use the trampoline technique to get to that address. This is where the attacker causes the program to go to a known point in memory that always has the characters ‘ffe4’ which is a ‘jmp esp' instruction. This is a little trickery because the instruction there may be part of a longer string since ‘jmp esp’ is not something that should be called. This specific exploit won’t work on modern operating systems since it was so abused that it was fixed. It is very clever and fun to learn about though, and there are apparently ways around the fix.
+In order for the attacker to get their code executed during a crash, they need to first determine the state of the crash and what they will have access to; such as, will they be able to overwrite the EIP (instruction pointer) with a stack overflow. Next, they need to figure out the offset of the return address so that they know how much data to overflow with and what part of that data will end up in the return address. We did this with Javascript in a lab because all the major vulnerabilities in the browser are exploited with it. Then, the attacker needs to put their shell code into the memory right after where they put the return address. Finally, they need to find the address of their shell code in memory. Based on where the code is placed, the ESP (stack pointer) register will be pointing right at the location of the shell code. This is great, but the attacker needs to use the trampoline technique to get to that address. This is where the attacker causes the program to go to a known point in memory that always has the characters ‘ffe4’ which is a ‘jmp esp' instruction. This is a little trickery because the instruction there may be part of a longer string since ‘jmp esp’ is not something that should be called. This specific exploit won’t work on modern operating systems since it was so abused that it was fixed. It is very clever and fun to learn about though, and there are apparently ways around the fix.
 
 Recently, I have started to learn the systems programming language Rust whose main goal is to be a safer systems language. I'm still a beginner, but I wonder how many security issues, such as stack overflows, could be solved with a browser built in Rust. I'm sure if it solved anything there would be workarounds, but it seems interesting to think about.
 
 ###### Attack the Heap
 
-Another vulnerability is called user after free, and it is an exploit in the heap rather than the stack. This consists of an attacker freeing an object, putting their own object in its place, putting their shell code somewhere in memory, and using the object they placed in the freed memory to cause code execution. These exploits have been very popular in the past few years in javascript and the browser.
+Another vulnerability is called user after free, and it is an exploit in the heap rather than the stack. This consists of an attacker freeing an object, putting their own object in its place, putting their shell code somewhere in memory, and using the object they placed in the freed memory to cause code execution. These exploits have been very popular in the past few years in Javascript and the browser.
 
 Internet Explorer uses the default process heap. The program will get 1 MB of this heap from the VirtualAlloc() due to the requested size. The low fragmentation heap in this heap can be used after the 18th call for alloc of the same size. It will consist of buckets all of that size. It has no coalescing which means that the memory buckets will all stay the same size and be available after being freed. This is useful for exploiting use after free vulnerabilities.
 
@@ -555,12 +561,12 @@ I found winDBG to be challenging since it has been over a year since taking CS 2
 
 Both labs had the same end goal, to exploit Internet Explorer in order to get the calculator program in windows to open. This is a popular way to show you can get a program to do something it wasn't intended to do. The first lab did this using a stack overflow, and the second lab did this by using a use after free. The mechanics of these were both discussed in the lecture section of this blog post.
 
-The stack overflow was fun to see step by step. Since the goal is to fill the eip register with an address that will execute shell code, the first step was to find the location of eip and see that I could fill it. This was done using !pattern_offset from the byuakugan module. I then modified the javascript code that was running in the browser to put 42424242 into eip.
+The stack overflow was fun to see step by step. Since the goal is to fill the eip register with an address that will execute shell code, the first step was to find the location of eip and see that I could fill it. This was done using !pattern_offset from the byuakugan module. I then modified the Javascript code that was running in the browser to put 42424242 into eip.
 
 ![](img/week4/eipOffset.png)
 ![](img/week4/fillEip.png)
 
-Then, I searched for and found an address where the 'jmp esp' command was. I put this address into eip. A big trick which I found the lecture helpful for was that there is a return 4 after the function in the assembly code to account for. It meant that after filling eip, 4 more bytes needed to be filled to reach esp, which is where I needed to put the shell code. To do this, I just filled in 4 bytes that meant nothing after the address placed in eip. This resulted in the following javascript.
+Then, I searched for and found an address where the 'jmp esp' command was. I put this address into eip. A big trick which I found the lecture helpful for was that there is a return 4 after the function in the assembly code to account for. It meant that after filling eip, 4 more bytes needed to be filled to reach esp, which is where I needed to put the shell code. To do this, I just filled in 4 bytes that meant nothing after the address placed in eip. This resulted in the following Javascript.
 
 ![](img/week4/ret4.png)
 
